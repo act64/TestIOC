@@ -1,0 +1,112 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal();
+        maven {
+            name 'jkys-repository'
+            url downloadRepositoryUrl
+        }
+        maven {
+            url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+        }
+        maven {
+            url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
+        }
+//        maven {
+//            name 'jkys-local-repository'
+//            url localRepositoryUrl
+//        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        //引入自动化多渠道打包的gradle插件
+        classpath 'com.jkys.gradle.plugin:mcpplugin:1.0.1'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    idea {
+        module {
+            downloadSources = true
+            downloadJavadoc = true
+        }
+    }
+
+    configurations {
+        provided
+        compile.extendsFrom provided
+        deployerJars
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal();
+        maven {
+            url "https://jitpack.io"
+        }
+
+        maven {
+            name 'jkys-repository'
+            url downloadRepositoryUrl
+        }
+        maven {
+            url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+        }
+        maven {
+            url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
+        }
+//        maven {
+//            name 'jkys-local-repository'
+//            url localRepositoryUrl
+//        }
+        tasks.withType(JavaCompile) {
+            options.encoding = "UTF-8"
+        }
+    }
+}
+
+//configurations.all {
+//    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+//}
+
+subprojects {
+    dependencies {
+        deployerJars "org.apache.maven.wagon:wagon-http:2.2"
+    }
+}
+
+ext {
+    //以下各参数与闪电购app中一致，此处统一管理
+    compileSdkVersion = 23
+    buildToolsVersion = "24.0.2"
+    minSdkVersion = 16
+    targetSdkVersion = 22
+
+    supportVersion = "24.2.0"
+
+    //仓库选择
+    repoType = "remote"
+//    repoType = "local"
+}
+
+task deleteDescriptors(type: Exec) {
+    def dir1 = "rm -rf ~/.gradle/caches/modules-2/files-2.1/com.jkys.sdk"
+    def dir2 = "rm -rf ~/.gradle/caches/modules-2/files-2.1/com.jkys.gradle.plugin"
+    def dir3 = "rm -rf ~/.gradle/caches/modules-2/metadata-2.16/descriptors/com.jkys.sdk"
+    def dir4 = "rm -rf ~/.gradle/caches/modules-2/metadata-2.16/descriptors/com.jkys.gradle.plugin"
+    executable "sh"
+    args "-c", dir1 + "&&" + dir2 + "&&" + dir3 + "&&" + dir4
+}
+
+task clean(type: Delete, dependsOn: deleteDescriptors) {
+    delete rootProject.buildDir
+}
