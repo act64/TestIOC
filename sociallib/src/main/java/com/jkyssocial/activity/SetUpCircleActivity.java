@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jkys.jkysbase.data.NetWorkResult;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.MainSelector;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
@@ -30,12 +32,9 @@ import com.jkyssocial.event.FollowCircleEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
-import org.jsoup.helper.StringUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -43,10 +42,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -72,7 +70,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
     private Buddy userInfo;
     private ProgressBar activity_detail_circle_progressBar;
 
-    @Bind(R.id.right_rl)
+    @BindView(R2.id.right_rl)
     View rightRL;
 
     static class EditCirleRequestListener implements RequestManager.RequestListener<CircleResult> {
@@ -195,14 +193,14 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
         initEvent();
         // 小龙之前页面给了circle 此也面不需要getData
 //        getData(null);
-        LogUtil.addLog(this, "page-forum-circle-detail");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-circle-detail");
     }
 
     //网络请求数据之后的数据填充
     private void getData(String baseLine) {
         circleimageUrl = circle.getAvatar();
         if (!TextUtils.isEmpty(circle.getAvatar())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), this,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), this,
                     activity_detail_circle_head_img, ImageManager.circleAvatarOptions);
         }
 
@@ -213,21 +211,21 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
 
         } else if (buddyList.size() >= 3) {
             if (!TextUtils.isEmpty(circle.getBuddyList().get(0).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(0).getImgUrl(),
                         this, activity_detail_circle_members_img0, R.drawable.social_new_avatar);
             } else {
                 activity_detail_circle_members_img0.setImageResource(R.drawable.social_new_avatar);
             }
             if (!TextUtils.isEmpty(circle.getBuddyList().get(1).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(1).getImgUrl(), this,
                         activity_detail_circle_members_img1, R.drawable.social_new_avatar);
             } else {
                 activity_detail_circle_members_img1.setImageResource(R.drawable.social_new_avatar);
             }
             if (!TextUtils.isEmpty(circle.getBuddyList().get(2).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(2).getImgUrl(), this,
                         activity_detail_circle_members_img2, R.drawable.social_new_avatar);
             } else {
@@ -237,14 +235,14 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
         } else if (buddyList.size() == 2) {
             activity_detail_circle_members_img0.setVisibility(View.INVISIBLE);
             if (!TextUtils.isEmpty(circle.getBuddyList().get(0).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(0).getImgUrl(), this,
                         activity_detail_circle_members_img1, R.drawable.social_new_avatar);
             } else {
                 activity_detail_circle_members_img1.setImageResource(R.drawable.social_new_avatar);
             }
             if (!TextUtils.isEmpty(circle.getBuddyList().get(1).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(1).getImgUrl(), this,
                         activity_detail_circle_members_img2, R.drawable.social_new_avatar);
             } else {
@@ -255,7 +253,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
             activity_detail_circle_members_img0.setVisibility(View.INVISIBLE);
             activity_detail_circle_members_img1.setVisibility(View.INVISIBLE);
             if (!TextUtils.isEmpty(circle.getBuddyList().get(0).getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + circle.getBuddyList().get(0).getImgUrl(), this,
                         activity_detail_circle_members_img2, R.drawable.social_new_avatar);
             }else{
@@ -398,7 +396,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
 
     private String circleimageUrl;
 
-    @OnClick(R.id.right_rl)
+   @OnClick(R2.id.right_rl)
     void confirm(View v) {
         if (tempFile != null) {
             // 先上传头像
@@ -411,7 +409,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    @OnClick(R.id.left_rl)
+   @OnClick(R2.id.left_rl)
     void back(View v) {
         finish();
     }
@@ -421,7 +419,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             // 按钮的点击事件情况:
-            case R.id.activity_detail_circle_disband:
+            case R2.id.activity_detail_circle_disband:
                 if (localButtonType == DISBAND) {
                     // 解散圈子的情况
                     switch (status) {
@@ -442,7 +440,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
                     EnterOrOutCircle("成功加入", 1, new Intent(this, CircleMainActivity.class));
                 }
                 break;
-            case R.id.rl_avatar:
+            case R2.id.rl_avatar:
                 // TODO 本地设置圈子头像的 界面
                 if (localButtonType == DISBAND) {
                     Intent i_rl_avatar = new Intent(this, PhotoSelectedThumbnailActivity.class);
@@ -451,13 +449,13 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
 
-            case R.id.rl_member:
+            case R2.id.rl_member:
                 Intent i_rl_member = new Intent(this, CircleMemberActivity.class);
                 i_rl_member.putExtra("circle", circle);
                 startActivity(i_rl_member);
                 break;
 
-            case R.id.rl_descript:
+            case R2.id.rl_descript:
                 if (localButtonType == DISBAND) {
                     Intent i_rl_descript = new Intent(this, EditDescriptCircleActivity.class);
                     String desStr = activity_detail_circle_descript.getText().toString();
@@ -470,7 +468,7 @@ public class SetUpCircleActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             // 点击头像 放大
-            case R.id.activity_detail_circle_head_img:
+            case R2.id.activity_detail_circle_head_img:
                 Intent intent = new Intent(this, ImageShowerActivity.class);
                 intent.putExtra("imgUrl", circle.getAvatar());
                 startActivity(intent);

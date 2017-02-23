@@ -30,6 +30,9 @@ import com.jkys.common.widget.CustomToolbar;
 import com.jkys.jkysbase.BaseCommonUtil;
 import com.jkys.jkysim.chat.emoji.MsgFaceUtils;
 import com.jkys.jkyswidget.ProgressBarDialog;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyshealth.tool.CommonDialog;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.RequestManager;
@@ -45,25 +48,20 @@ import com.jkyssocial.event.PublishFinishEvent;
 import com.jkyssocial.handler.PublishDynamicManager;
 import com.jkyssocial.pageradapter.MessageBoxPagerAdapter;
 import com.mintcode.base.BaseActivity;
-import com.mintcode.util.LogUtil;
-import com.mintcode.util.MIUIUtil;
 import com.mintcode.widget.MyGridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import org.jsoup.helper.StringUtil;
-
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -80,35 +78,35 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
     private static final int PERSONAL_TYPE = 0;
     private static final int CIRCLE_TYPE = 1;
 
-    //    @Bind(R.id.back)
+    //    @BindView(R2.id.back)
 //    ImageView back;
-//    @Bind(R.id.toolbarTitle)
+//    @BindView(R2.id.toolbarTitle)
 //    TextView toolbarTitle;
-//    @Bind(R.id.publishBtn)
+//    @BindView(R2.id.publishBtn)
 //    TextView publishBtn;
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
-    @Bind(R.id.title)
+    @BindView(R2.id.title)
     EditText title;
-    @Bind(R.id.content)
+    @BindView(R2.id.content)
     EditText content;
-    @Bind(R.id.gridView)
+    @BindView(R2.id.gridView)
     MyGridView gridView;
-    @Bind(R.id.switchImage)
+    @BindView(R2.id.switchImage)
     ImageView switchImage;
-    @Bind(R.id.view_pager)
+    @BindView(R2.id.view_pager)
     ViewPager viewPager;
-    @Bind(R.id.indicator)
+    @BindView(R2.id.indicator)
     CirclePageIndicator indicator;
-    @Bind(R.id.hideBox)
+    @BindView(R2.id.hideBox)
     TextView hideBox;
-    @Bind(R.id.messagebox)
+    @BindView(R2.id.messagebox)
     RelativeLayout messagebox;
-    @Bind(R.id.editLinear)
+    @BindView(R2.id.editLinear)
     LinearLayout editLinear;
-    @Bind(R.id.titleDivider)
+    @BindView(R2.id.titleDivider)
     View titleDivider;
-    @Bind(R.id.select_tags_fl)
+    @BindView(R2.id.select_tags_fl)
     FlexboxLayout selectTagsFl;
 
     private PublishNewsPicAdapter adapter;
@@ -190,7 +188,7 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
 
     };
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         onBackPressed();
     }
@@ -227,7 +225,7 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
         exitEditDialog.show();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void onPublishClick(View view) {
         List<String> picList = adapter.getPicList();
         if ( TextUtils.isEmpty(title.getText().toString())) {
@@ -248,7 +246,7 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
             ZernToast.showToast(this, "调皮，至少发一张图啦", Gravity.CENTER, 0, 0);
             return;
         }
-        LogUtil.addLog(NewPublishDynamicActivity.this, "event-forum-new-topic");
+        AppImpl.getAppRroxy().addLog(NewPublishDynamicActivity.this, "event-forum-new-topic");
         if (!isPublishing) {
             isPublishing = true;
             Dynamic dynamic = new Dynamic();
@@ -288,9 +286,6 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
 
         ApiManager.getUserInfo(ApiManager.TYPE_REQUEST_WITH_CACHE, new GetUserInfoResquestListener(this),
                 REQUEST_MY_INFO, this, null);
-        if (MIUIUtil.isMIUIV6()) {
-//            MIUIUtil.setBarBlackText(this);
-        }
         contentEditText = (EditText) findViewById(R.id.content);
         curEditText = contentEditText;
         isPublishing = false;
@@ -302,7 +297,7 @@ public class NewPublishDynamicActivity extends BaseActivity implements TextWatch
         CirclePageIndicator circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         circlePageIndicator.setViewPager(pager);
         content.addTextChangedListener(this);
-        LogUtil.addLog(this,"page-forum-new-topic", "page-forum-new-topic-trump");
+        AppImpl.getAppRroxy().addLog(this,"page-forum-new-topic", "page-forum-new-topic-trump");
 
         ApiManager.listTopic(this, context, null, 100, 1);
         isH5Operation = getIntent().getBooleanExtra("isH5",false);

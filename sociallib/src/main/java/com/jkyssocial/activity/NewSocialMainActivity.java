@@ -28,10 +28,12 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.jkys.common.widget.AutoScrollViewPager;
 import com.jkys.jkysim.database.KeyValueDBService;
-import com.jkys.tools.IntentUtil;
+import com.jkys.proxy.AppImpl;
+import com.jkys.proxy.MyInfoUtilProxy;
+import com.jkys.proxy.ProxyClassFactory;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.ListUtil;
-import com.jkyshealth.manager.MedicalApi;
-import com.jkyshealth.manager.MedicalApiManager;
 import com.jkyshealth.manager.MedicalVolleyListener;
 import com.jkyshealth.result.HomeBannerData;
 import com.jkyssocial.Fragment.NewLatestDynamicFragment;
@@ -46,25 +48,19 @@ import com.jkyssocial.data.Topic;
 import com.jkyssocial.data.TopicListResult;
 import com.jkyssocial.event.ChangSocialMessageEvent;
 import com.jkyssocial.event.ChangeUserInfoEvent;
-import com.mintcode.App;
-import com.mintcode.area_patient.area_home.BannerActivity;
 import com.mintcode.area_patient.area_mine.MyInfoPOJO;
-import com.mintcode.area_patient.area_mine.MyInfoUtil;
 import com.mintcode.area_patient.entity.MyInfo;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
 import com.mintcode.util.Keys;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -78,43 +74,43 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
 
     Buddy myBuddy;
 
-    //    @Bind(R.id.new_personal_tablayout)
+    //    @BindView(R2.id.new_personal_tablayout)
 //    TabLayout tabLayout;
-    @Bind(R.id.new_personal_viewPager)
+    @BindView(R2.id.new_personal_viewPager)
     ViewPager viewPager;
-    @Bind(R.id.back)
+    @BindView(R2.id.back)
     ImageView back;
-    @Bind(R.id.toolbarTitle)
+    @BindView(R2.id.toolbarTitle)
     TextView toolbarTitle;
-    //    @Bind(R.id.my_avatar)
+    //    @BindView(R2.id.my_avatar)
 //    CircleImageView myAvatar;
-//    @Bind(R.id.avatarArea)
+//    @BindView(R2.id.avatarArea)
 //    LinearLayout avatarArea;
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.collapsingToolbar)
+    @BindView(R2.id.collapsingToolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.appBarLayout)
+    @BindView(R2.id.appBarLayout)
     AppBarLayout appBarLayout;
-    @Bind(R.id.main_content)
+    @BindView(R2.id.main_content)
     CoordinatorLayout mainContent;
 
     FragmentPagerAdapter pagerAdapter;
-    @Bind(R.id.new_banner)
+    @BindView(R2.id.new_banner)
     AutoScrollViewPager banner;
-    @Bind(R.id.new_dot)
+    @BindView(R2.id.new_dot)
     LinearLayout newDotLayout;
-    @Bind(R.id.rel_pager)
+    @BindView(R2.id.rel_pager)
     RelativeLayout bannerGroup;
-    @Bind(R.id.recommend_tv)
+    @BindView(R2.id.recommend_tv)
     TextView recommendTv;
-    @Bind(R.id.latest_tv)
+    @BindView(R2.id.latest_tv)
     TextView latestTv;
-    @Bind(R.id.topic_tv)
+    @BindView(R2.id.topic_tv)
     TextView topicTv;
-    @Bind(R.id.topic_rl)
+    @BindView(R2.id.topic_rl)
     View topicRL;
-    @Bind(R.id.fab)
+    @BindView(R2.id.fab)
     FloatingActionButton fab;
 
     ListPopupWindow popupMenu = null;
@@ -148,8 +144,8 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
 
             // 我的那边信息是每次resume中获取到本地缓存的图片地址。我在这边存储上传的头像。
             String avatarUrl = activity.myBuddy.getImgUrl();
-//            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + avatarUrl, activity.getContext(), activity.myAvatar, ImageManager.avatarOptions);
-            MyInfoUtil infoUtil = new MyInfoUtil();
+//            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + avatarUrl, activity.getContext(), activity.myAvatar, ImageManager.avatarOptions);
+            MyInfoUtilProxy infoUtil = ProxyClassFactory.getProxyClass(AppImpl.getAppRroxy().getMyInfoProxyClazz());
             MyInfoPOJO infoPOJO = infoUtil.getMyInfo();
             MyInfo myInfo;
             if (infoPOJO != null) {
@@ -167,12 +163,12 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
         }
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R2.id.back)
     void back(View view) {
         finish();
     }
 
-    @OnClick(R.id.fab)
+    @OnClick(R2.id.fab)
     void fabOnClick(View view) {
         startActivity(new Intent(this, NewPublishDynamicActivity.class));
     }
@@ -195,8 +191,8 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
 
         setViewPager();
         MedicalVolleyListenerImpl impl = new MedicalVolleyListenerImpl();
-        MedicalApiManager.getInstance().getSocialBanner(impl);
-
+//        MedicalApiManager.getInstance().getSocialBanner(impl);
+        AppImpl.getAppRroxy().getSocialBanner(impl);
         KeyValueDBService mValueDBService = KeyValueDBService.getInstance();
         token = mValueDBService.findValue(Keys.TOKEN);
         uid = mValueDBService.findValue(Keys.UID);
@@ -206,7 +202,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
         }
         ApiManager.listTopic(this, context, null, 100, 2);
 
-        LogUtil.addLog(this, "page-forum-home-trump");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-home-trump");
 
 
     }
@@ -223,7 +219,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
                 latestTv.setSelected(false);
                 topicTv.setSelected(false);
                 viewPager.setCurrentItem(0);
-                LogUtil.addLog(NewSocialMainActivity.this, "event-topic-short-trump");
+                AppImpl.getAppRroxy().addLog(NewSocialMainActivity.this, "event-topic-short-trump");
             }
         });
         latestTv.setOnClickListener(new View.OnClickListener() {
@@ -233,7 +229,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
                 latestTv.setSelected(true);
                 topicTv.setSelected(false);
                 viewPager.setCurrentItem(1);
-                LogUtil.addLog(NewSocialMainActivity.this, "event-topic-new-trump");
+                AppImpl.getAppRroxy().addLog(NewSocialMainActivity.this, "event-topic-new-trump");
             }
         });
         topicRL.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +248,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         String s = topicStrList.get(position);
                         if (newTopicDynamicFragment != null) {
-                            LogUtil.addLog(NewSocialMainActivity.this, "event-topic-theme-trump-" + topicList.get(position).getId());
+                            AppImpl.getAppRroxy().addLog(NewSocialMainActivity.this, "event-topic-theme-trump-" + topicList.get(position).getId());
                             newTopicDynamicFragment.setTopic(topicList.get(position));
                             newTopicDynamicFragment.onRefresh();
                         }
@@ -366,9 +362,9 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
             bannerImg.setTag(i);
             final HomeBannerData bean = bannerList.get(i);
             if (bean == null) continue;
-            if (!App.isHideMall) {
+            if (!AppImpl.getAppRroxy().getIsHideMall()) {
                 if (!TextUtils.isEmpty(bean.getImagePath())) {
-                    ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + bean.getImagePath(),
+                    ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + bean.getImagePath(),
                             context, bannerImg, R.drawable.default_banner_img);
                 } else {
                     bannerImg.setImageResource(R.drawable.default_banner_img);
@@ -390,13 +386,17 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
                     String type = redirect.getType();
                     String url = redirect.getUrl();
                     if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(url)) {
-                        LogUtil.addLog(NewSocialMainActivity.this, "event-banner-" + url, "event-forum-banner-trump-" + url + "-" + finalI);
+                        AppImpl.getAppRroxy().addLog(NewSocialMainActivity.this, "event-banner-" + url, "event-forum-banner-trump-" + url + "-" + finalI);
                         if ("WEB_PAGE".equals(type)) {//跳转到webview页面
-                            Intent intent = new Intent(NewSocialMainActivity.this, BannerActivity.class);
-                            intent.putExtra("pageToUrl", url);
-                            startActivity(intent);
+                            try {
+                                Intent intent = new Intent(NewSocialMainActivity.this, Class.forName("com.mintcode.area_patient.area_home.BannerActivity") );
+                                intent.putExtra("pageToUrl", url);
+                                startActivity(intent);
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         } else if ("NATIVE".equals(type)) {//跳转到原生界面
-                            IntentUtil.startIntent(url, NewSocialMainActivity.this, null);
+                           AppImpl.getAppRroxy().startIntent(url, NewSocialMainActivity.this, null);
                         }
                     }
                 }
@@ -430,7 +430,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
         @Override
         public void successResult(String result, String url) {
             hideLoadDialog();
-            if (MedicalApi.SOCIAL_BANNER_PATH.equals(url)) {//头部banner
+            if (AppImpl.getAppRroxy().getSOCIAL_BANNER_PATH().equals(url)) {//头部banner
                 bannerList = GSON.fromJson(result, new TypeToken<ArrayList<HomeBannerData>>() {
                 }.getType());
                 setBannerFromNet(bannerList);
@@ -519,7 +519,7 @@ public class NewSocialMainActivity extends BaseActivity implements RequestManage
 //        if (buddy != null) {
 //            myBuddy = buddy;
 //            if (myAvatar != null)
-//                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + myBuddy.getImgUrl(), getContext(), myAvatar, ImageManager.avatarOptions);
+//                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + myBuddy.getImgUrl(), getContext(), myAvatar, ImageManager.avatarOptions);
 //        }
 //    }
 }

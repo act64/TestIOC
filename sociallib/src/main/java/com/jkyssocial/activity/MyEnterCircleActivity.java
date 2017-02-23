@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jkys.jkysbase.data.NetWorkResult;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.DeviceUtil;
 import com.jkyshealth.tool.ViewUtil;
 import com.jkyssocial.common.manager.ApiManager;
@@ -31,18 +34,15 @@ import com.jkyssocial.widget.DragSortListView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -55,9 +55,9 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
     private LinearLayout footView, footViewList;
     private RelativeLayout headView;
 
-    @Bind(R.id.title_toolbar)
+    @BindView(R2.id.title_toolbar)
     TextView toolbarTitle;
-    @Bind(R.id.right_rl)
+    @BindView(R2.id.right_rl)
     View rightRL;
     //    private TextView empty;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -140,7 +140,7 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
                             public void onClick(View v) {
 //                            if(showLoginDialog())
 //                                return;
-                                LogUtil.addLog(activity.getApplicationContext(), "event-forum-recommend-circle-" + circle.getId());
+                                AppImpl.getAppRroxy().addLog(activity.getApplicationContext(), "event-forum-recommend-circle-" + circle.getId());
                                 Intent intent = new Intent(activity, CircleMainActivity.class);
                                 intent.putExtra("circle", circle);
                                 activity.startActivity(intent);
@@ -180,7 +180,7 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
                             fancyButton.setVisibility(View.GONE);
                         }
                         if (!TextUtils.isEmpty(circle.getAvatar())) {
-                            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(),
+                            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(),
                                     null, avatar, ImageManager.circleAvatarOptions);
                         }
 
@@ -221,7 +221,7 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
             toolbarTitle.setText("他加入的圈子");
         }
         initEvent();
-        LogUtil.addLog(context, "page-forum-mycircle");
+        AppImpl.getAppRroxy().addLog(context, "page-forum-mycircle");
 //        onReflushData();
     }
 
@@ -299,12 +299,12 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
         getUserInfoCircleNum();
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void onRightRLClick(View view) {
         Intent intent = new Intent(this, BuildCircleActivity.class);
         if (circleNum < 3) {
@@ -319,8 +319,8 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.right_text:
-            case R.id.right_icon:
+            case R2.id.right_text:
+            case R2.id.right_icon:
                 startActivity(new Intent(this, SortMyCircleActivity.class));
                 break;
         }
@@ -419,7 +419,7 @@ public class MyEnterCircleActivity extends BaseActivity implements View.OnClickL
                 holder.item_allcircle_member.setText("成员: " + circle.getStat().getMemberCount());
             // 圈子的头像
             if (!TextUtils.isEmpty(circle.getAvatar())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(),
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(),
                         context, holder.item_allcircle_img, R.drawable.social_circle_avatar);
             } else {
                 holder.item_allcircle_img.setImageResource(R.drawable.social_circle_avatar);

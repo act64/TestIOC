@@ -1,0 +1,196 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_behavior="com.jkyssocial.common.behavior.FlingBehavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:id="@+id/circleHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_toolbar_height"
+                android:background="#3b4149"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/circleSet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/circleAvatar"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius="5dp" />
+
+                    <TextView
+                        android:id="@+id/circleOwnerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/circleAvatar"
+                        android:ellipsize="end"
+                        android:maxLength="12"
+                        android:paddingBottom="8dp"
+                        android:text="test"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/circleDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/circleOwnerName"
+                        android:layout_toRightOf="@id/circleAvatar"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:text="简介:"
+                        android:textSize="12sp"
+                        android:textColor="#cccccc" />
+
+                    <TextView
+                        android:id="@+id/circleUserCountHead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/circleDesc"
+                        android:layout_toRightOf="@id/circleAvatar"
+                        android:text="成员："
+                        android:layout_marginTop="7dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/circleUserCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/circleDesc"
+                        android:layout_toRightOf="@id/circleUserCountHead"
+                        android:text="5261"
+                        android:layout_marginTop="7dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/joinCircle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/circleDesc"
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="5dp"
+                        fancy:fb_defaultColor="@color/social_primary"
+                        fancy:fb_focusColor="@color/social_primary_dark"
+                        fancy:fb_radius="4dp"
+                        fancy:fb_text="加入"
+                        fancy:fb_textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#E6E6E6" />
+
+                <LinearLayout
+                    android:id="@+id/headerLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#CCCCCC" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:background="@color/bg_page" />
+
+                <TextView
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:background="#FAFAFA"
+                    android:textColor="@color/text_999999"
+                    android:text="发布动态让大家知道你的近况"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <com.jkys.common.widget.CustomToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_toolbar_height"
+                android:fitsSystemWindows="true"
+                android:background="@color/transparent"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+                app:right_firstIcon="@drawable/social_icon_publish"
+                app:toolbar_title="圈子主页" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ImageView
+        android:id="@+id/scrollToTop"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/social_scroll_to_top"
+        android:visibility="gone" />
+
+    <ViewStub
+        android:id="@+id/guidance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/social_guidance" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -161,7 +161,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
                     return;
                 }
                 if (activity instanceof NewPersonalSpaceActivity) return;
-                if (MainSelector.isNeedNewMain())
+                if (AppImpl.getAppRroxy().isNeedNewMain() )
                     return;
                 Intent intent = new Intent(activity, NewPersonalSpaceActivity.class);
                 intent.putExtra("otherBuddy", dynamic.getOwner());
@@ -240,7 +240,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
                     return;
                 }
                 if (!TextUtils.isEmpty(source))
-                    LogUtil.addLog(context, "event-topic-detail-trump-" + source + dynamic.getDynamicId());
+                    AppImpl.getAppRroxy().addLog(context, "event-topic-detail-trump-" + source + dynamic.getDynamicId());
                 Intent intent = new Intent(activity, DynamicDetailActivity.class);
                 intent.putExtra("dynamic", dynamic);
                 activity.startActivity(intent);
@@ -285,7 +285,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
             }
             if (dynamic.getOwner() != null) {
                 if (!TextUtils.isEmpty(dynamic.getOwner().getImgUrl())) {
-                    ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + dynamic.getOwner().getImgUrl(),
+                    ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + dynamic.getOwner().getImgUrl(),
                             null, dynamicTextViewHolder.avatarIV, ImageManager.avatarOptions);
                 }
 
@@ -379,7 +379,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
                 ImageView vFlag = (ImageView) view.findViewById(R.id.vFlag);
                 TextView userTitle = (TextView) view.findViewById(R.id.userTitle);
                 TextView userName = (TextView) view.findViewById(R.id.userName);
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
                 ImageManager.setVFlag(vFlag, buddy1);
                 userName.setText(buddy1.getUserName());
                 userTitle.setText(buddy1.getUserType() == 1 ? "专家医生" : "资深糖友");
@@ -387,9 +387,9 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
                     @Override
                     public void onClick(View v) {
                         if (LoginHelper.getInstance().showLoginActivity((Activity) context)) return;
-                        if (MainSelector.isNeedNewMain())
+                        if (AppImpl.getAppRroxy().isNeedNewMain() )
                             return;
-                        LogUtil.addLog(context, "event-forum-recommend-expert-" + buddy1.getBuddyId());
+                        AppImpl.getAppRroxy().addLog(context, "event-forum-recommend-expert-" + buddy1.getBuddyId());
                         Intent intent = new Intent(context, NewPersonalSpaceActivity.class);
                         intent.putExtra("otherBuddy", buddy1);
                         context.startActivity(intent);
@@ -404,7 +404,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
         if (dynamic.getStatusAndroid() == 0) {
             String url = dynamic.getImages().get(position);
             if (!TextUtils.isEmpty(url)) {
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + ImageUtil.getSmallImageUrl(url), null,
                         imageView, new Reloadlistener());
             }
@@ -511,22 +511,22 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
     }
 
     public static class SocialMainHeadHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.social_main_gridView)
+        @BindView(R2.id.social_main_gridView)
         public GridView mGridView;
 
-        @Bind(R.id.recommend_rl)
+        @BindView(R2.id.recommend_rl)
         public RelativeLayout recommendRl;
 
-        @Bind(R.id.headerLinear)
+        @BindView(R2.id.headerLinear)
         public LinearLayout headerLinear;
 
-        @Bind(R.id.findMoreSuperStar)
+        @BindView(R2.id.findMoreSuperStar)
         public TextView findMoreSuperStar;
 
-        @Bind(R.id.social_main_mycircle_icon)
+        @BindView(R2.id.social_main_mycircle_icon)
         public ImageView social_main_mycircle_icon;
 
-        @Bind(R.id.social_main_mycircle)
+        @BindView(R2.id.social_main_mycircle)
         public TextView social_main_mycircle;
 
         public SocialMainHeadHolder(View itemView) {
@@ -545,14 +545,14 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
             }
             if (LoginHelper.getInstance().showLoginActivity(topActivity)) return;
             switch (v.getId()) {
-                case R.id.social_main_mycircle:
-                case R.id.social_main_mycircle_icon:
+                case R2.id.social_main_mycircle:
+                case R2.id.social_main_mycircle_icon:
                     if (!ViewUtil.singleClick()) return;
                     Intent intent = new Intent(topActivity, MyEnterCircleActivity.class);
                     intent.putExtra("myBuddy", HotRecommendFragment.myBuddy);
                     topActivity.startActivity(intent);
                     break;
-                case R.id.findMoreSuperStar:
+                case R2.id.findMoreSuperStar:
                     topActivity.startActivity(new Intent(topActivity, SugarControlStarActivity.class));
                     break;
             }
@@ -561,70 +561,70 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
 
     public static class DynamicTextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.rootView)
+        @BindView(R2.id.rootView)
         public View rootView;
 
-        @Bind(R.id.headerLine)
+        @BindView(R2.id.headerLine)
         public View headerLine;
 
-        @Bind(R.id.headerPad)
+        @BindView(R2.id.headerPad)
         public View headerPad;
 
-        @Bind(R.id.dynamicHeader)
+        @BindView(R2.id.dynamicHeader)
         public View dynamicHeader;
 
-        @Bind(R.id.avatar)
+        @BindView(R2.id.avatar)
         public CircleImageView avatarIV;
 
-        @Bind(R.id.vFlag)
+        @BindView(R2.id.vFlag)
         public ImageView vFlag;
 
-        @Bind(R.id.userName)
+        @BindView(R2.id.userName)
         public TextView userNameTV;
 
-        @Bind(R.id.createdTime)
+        @BindView(R2.id.createdTime)
         public TextView createdTimeTV;
 
-        @Bind(R.id.title)
+        @BindView(R2.id.title)
         public TextView titleTV;
 
-        @Bind(R.id.content)
+        @BindView(R2.id.content)
         public TextView contentTV;
 
-        @Bind(R.id.come)
+        @BindView(R2.id.come)
         public ViewGroup comeVG;
 
-        @Bind(R.id.comeFrom)
+        @BindView(R2.id.comeFrom)
         public TextView comeFromTV;
 
-        @Bind(R.id.zan)
+        @BindView(R2.id.zan)
         public TextView zanTV;
 
-        @Bind(R.id.comment)
+        @BindView(R2.id.comment)
         public TextView commentTV;
 
-        @Bind(R.id.renqi)
+        @BindView(R2.id.renqi)
         public TextView renqiTV;
 
-        @Bind(R.id.sendingBar)
+        @BindView(R2.id.sendingBar)
         public ProgressBar sendingBar;
 
-        @Bind(R.id.sendError)
+        @BindView(R2.id.sendError)
         public ImageView sendError;
 
-        @Bind(R.id.sendStatus)
+        @BindView(R2.id.sendStatus)
         public TextView sendStatus;
 
-        @Bind(R.id.topic_tv)
+        @BindView(R2.id.topic_tv)
         public TextView topicTV;
 
-        @Bind(R.id.circleOwnerTag)
+        @BindView(R2.id.circleOwnerTag)
         public FancyButton circleOwnerTag;
 
-        @Bind(R.id.circleRecommendTag)
+        @BindView(R2.id.circleRecommendTag)
         public FancyButton circleRecommendTag;
 
-        @Bind(R.id.avatarArea)
+        @BindView(R2.id.avatarArea)
         public PercentRelativeLayout avatartArea;
 
         public DynamicTextViewHolder.DynamicTextViewHolderClicks mDynamicTextViewHolderClicks;
@@ -659,25 +659,25 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-//                case R.id.dynamicHeader:
+//                case R2.id.dynamicHeader:
 //                    mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
 //                    return;
-                case R.id.avatarArea:
+                case R2.id.avatarArea:
                     mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
                     return;
-                case R.id.userName:
+                case R2.id.userName:
                     mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
                     return;
-                case R.id.rootView:
+                case R2.id.rootView:
                     mDynamicTextViewHolderClicks.onItemView(v, getAdapterPosition());
                     return;
-                case R.id.comeFrom:
+                case R2.id.comeFrom:
                     mDynamicTextViewHolderClicks.onComeFrom(v, getAdapterPosition());
                     return;
-                case R.id.sendError:
+                case R2.id.sendError:
                     mDynamicTextViewHolderClicks.onSend(v, this);
                     return;
-                case R.id.sendStatus:
+                case R2.id.sendStatus:
                     mDynamicTextViewHolderClicks.onSend(v, this);
                     return;
             }
@@ -687,7 +687,7 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
 
     public class DynamicOneImageViewHolder extends DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
         DynamicOneImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {
@@ -697,10 +697,10 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
 
     public class DynamicTwoImageViewHolder extends SocialMainHeadAndBodyAdapter.DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
-        @Bind(R.id.secondImage)
+        @BindView(R2.id.secondImage)
         ImageView secondImage;
 
         DynamicTwoImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {
@@ -710,16 +710,16 @@ public class SocialMainHeadAndBodyAdapter extends RecyclerView.Adapter implement
 
     public class DynamicThreeImageViewHolder extends SocialMainHeadAndBodyAdapter.DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
-        @Bind(R.id.secondImage)
+        @BindView(R2.id.secondImage)
         ImageView secondImage;
 
-        @Bind(R.id.thirdImage)
+        @BindView(R2.id.thirdImage)
         ImageView thirdImage;
 
-        @Bind(R.id.moreImageTag)
+        @BindView(R2.id.moreImageTag)
         TextView moreImageTag;
 
         DynamicThreeImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {

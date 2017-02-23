@@ -9,19 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.adapter.NewTopicDynamicListAdapter;
 import com.jkyssocial.data.Topic;
 import com.jkyssocial.event.ChangSocialLatestDynamicEvent;
 import com.jkyssocial.event.DeleteDynamicEvent;
 import com.jkyssocial.listener.EndlessRecyclerOnScrollListener;
 import com.jkyssocial.listener.ListUIListener;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
@@ -30,10 +32,10 @@ import de.greenrobot.event.EventBus;
  */
 public class NewTopicDynamicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     NewTopicDynamicListAdapter dynamicListAdapter;
@@ -43,6 +45,7 @@ public class NewTopicDynamicFragment extends Fragment implements SwipeRefreshLay
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
 
     Topic topic;
+    private Unbinder unbinder;
 
     static class ListUIListenerImpl implements ListUIListener {
         private WeakReference<NewTopicDynamicFragment> fragmentWR;
@@ -102,7 +105,7 @@ public class NewTopicDynamicFragment extends Fragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_fragment_sugar_friend_dynamic, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=  ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         topic = (Topic) getArguments().getSerializable("topic");
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -123,12 +126,12 @@ public class NewTopicDynamicFragment extends Fragment implements SwipeRefreshLay
 
         dynamicListAdapter.create();
         if(topic != null)
-            LogUtil.addLog(getContext(), "page-forum-topic-theme-trump-" + topic.getId());
+            AppImpl.getAppRroxy().addLog(getContext(), "page-forum-topic-theme-trump-" + topic.getId());
 
         return view;
     }
 
-    @OnClick(R.id.scrollToTop)
+   @OnClick(R2.id.scrollToTop)
     void onScrollToTop(View view) {
         recyclerView.smoothScrollToPosition(0);
     }
@@ -145,7 +148,7 @@ public class NewTopicDynamicFragment extends Fragment implements SwipeRefreshLay
         EventBus.getDefault().unregister(this);
         dynamicListAdapter = null;
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 //    public void onEventMainThread(ChangSocialLatestDynamicEvent event) {

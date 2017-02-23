@@ -49,7 +49,7 @@ public class SugarControlStarActivity extends BaseActivity implements View.OnCli
 
     }
 
-    @OnClick(R.id.left_rl)
+   @OnClick(R2.id.left_rl)
     void back(View v){
         finish();
     }

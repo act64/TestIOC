@@ -1,10 +1,5 @@
 package com.jkyssocial.activity;
 
-import java.util.List;
-
-import com.jkyssocial.pageradapter.ImagePagerAdapter;
-import com.mintcode.base.BaseActivity;
-
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -12,7 +7,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import cn.dreamplus.wentang.R;
+import com.jkys.sociallib.R;
+import com.jkyssocial.pageradapter.ImagePagerAdapter;
+import com.mintcode.base.BaseActivity;
+
+import java.util.List;
+
 
 /**
  * 查看大图滑动页

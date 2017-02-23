@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
 
@@ -26,11 +26,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     testCompile 'junit:junit:4.12'
     compile group: repositoryGroup, name: 'jkysim', version: '1.0.21', ext: 'aar', changing: true
     compile group: repositoryGroup, name: 'jkysimdebug', version: '1.0.0', ext: 'aar', changing: true
     compile group: repositoryGroup, name: 'jkysbase', version: '1.0.4', ext: 'aar', changing: true
     compile group: repositoryGroup, name: 'jkyswidget', version: '1.0.1', ext: 'aar', changing: true
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.android.support:design:' + rootProject.ext.supportVersion
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.android.support:percent:23.4.0'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
+    compile files('libs/open_sdk_r5043.jar')
+    compile files('libs/weiboSDKCore_3.1.2.jar')
+    compile files('libs/libammsdk.jar')
 }

@@ -144,7 +144,7 @@ public class AllCircleTypeAdapter extends BaseAdapter implements MyListView.OnLo
         int memberCount = circle.getStat() == null ? 0 : circle.getStat().getMemberCount();
         holder.item_allcircle_member.setText("成员: " + memberCount);
         if (!TextUtils.isEmpty(circle.getAvatar())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), null,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), null,
                     holder.item_allcircle_img, ImageManager.circleAvatarOptions);
         }
 

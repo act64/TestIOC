@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/social_shadow"
+    android:gravity="center" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@null"
+        android:paddingRight="20dp"
+        android:paddingLeft="10dp"
+        android:scaleType="center"
+        android:src="@drawable/social_jiantou" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@+id/img_back"
+        android:layout_centerVertical="true"
+        android:background="#999999"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:textColor="@color/dark_black"
+        android:textSize="15sp"
+        android:text="图片"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:maxLength="12"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/img_back"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/text_green"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:scaleType="center"
+        android:visibility="gone"/>
+
+    </RelativeLayout>
+</LinearLayout>

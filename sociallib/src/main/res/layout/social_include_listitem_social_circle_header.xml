@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="5dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/avatar"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/circleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/text_333333"
+                android:textSize="16sp"
+                android:maxLength="9"
+                android:ellipsize="end"
+                android:text="糖尿病1型"/>
+
+            <TextView
+                android:id="@+id/circleUserCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/circleName"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/social_primary"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:text="成员：5261"/>
+
+            <TextView
+                android:id="@+id/circleDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/circleName"
+                android:gravity="center"
+                android:maxLength="15"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/text_999999"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/joinCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            fancy:fb_defaultColor="@color/social_primary"
+            fancy:fb_focusColor="@color/social_primary_dark"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            fancy:fb_text="加入"
+            fancy:fb_textColor="@color/white"
+            fancy:fb_radius="4dp"
+            fancy:fb_textSize="14sp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#E6E6E6" />
+</LinearLayout>

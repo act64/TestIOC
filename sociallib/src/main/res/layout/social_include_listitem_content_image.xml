@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- news content image -->
+<com.jkys.jkyswidget.FixedAspectRatioImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fixedaspectratio="http://schemas.android.com/apk/res-auto"
+    fixedaspectratio:aspectRatioWidth="1"
+    fixedaspectratio:aspectRatioHeight="1"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="0dp"
+    android:scaleType="centerCrop"
+    android:background="@color/bg_page" />

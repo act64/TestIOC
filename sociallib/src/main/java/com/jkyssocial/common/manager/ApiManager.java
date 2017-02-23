@@ -23,7 +23,6 @@ import com.jkyssocial.data.ListMessageResult;
 import com.jkyssocial.data.OrderCircleForUserResult;
 import com.jkyssocial.data.TopicListResult;
 import com.jkyssocial.data.TrumpHomeSocialData;
-import com.mintcode.area_patient.area_task.TaskAPI;
 import com.mintcode.area_patient.area_task.TaskListener;
 import com.mintcode.util.Keys;
 

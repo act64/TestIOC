@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="12dp">
+
+    <include
+        layout="@layout/social_new_avatar"
+        android:id="@+id/item_zsty_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/item_zsty_care"
+        android:layout_width="60dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_care"
+        android:gravity="center"
+        android:text="关注"
+        android:button="@null"
+        android:textColor="@color/selector_text_color"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/item_zsty_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/item_zsty_img"
+        android:layout_toLeftOf="@id/item_zsty_care"
+        android:singleLine="true"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/item_zsty_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_zsty_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/item_zsty_img"
+        android:text="1型患者"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/item_zsty_illage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_zsty_name"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/item_zsty_type"
+        android:text="14年"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+</RelativeLayout>

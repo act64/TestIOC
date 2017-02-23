@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jkys.jkysbase.data.NetWorkResult;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.activity.AllCircleActivity;
 import com.jkyssocial.activity.CircleMainActivity;
 import com.jkyssocial.activity.SortMyCircleActivity;
@@ -31,19 +33,20 @@ import com.jkyssocial.listener.ListUIListener;
 import com.jkyssocial.listener.ScrollToTopListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
+
+import static butterknife.ButterKnife.bind;
 
 /**
  * 社区糖友圈首页-圈子
@@ -53,16 +56,16 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class SocialCircleFragment extends SocialBaseFragment implements
         SwipeRefreshLayout.OnRefreshListener, AppBarLayout.OnOffsetChangedListener {
 
-    @Bind(R.id.appBarLayout)
+    @BindView(R2.id.appBarLayout)
     AppBarLayout appBarLayout;
 
-    @Bind(R.id.headerLinear)
+    @BindView(R2.id.headerLinear)
     LinearLayout headerLinear;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     CircleWithDynamicListAdapter dynamicListAdapter;
@@ -70,10 +73,11 @@ public class SocialCircleFragment extends SocialBaseFragment implements
     LinearLayoutManager linearLayoutManager;
 
     LayoutInflater mLayoutInflater;
-    @Bind(R.id.scrollToTop)
+    @BindView(R2.id.scrollToTop)
     ImageView scrollToTop;
-    @Bind(R.id.main_content)
+    @BindView(R2.id.main_content)
     CoordinatorLayout mainContent;
+    private Unbinder unbinder;
 
     static class ListUIListenerImpl implements ListUIListener {
         private WeakReference<SocialCircleFragment> fragmentWR;
@@ -158,7 +162,7 @@ public class SocialCircleFragment extends SocialBaseFragment implements
                         public void onClick(View v) {
                             if (fragment.showLoginDialog())
                                 return;
-                            LogUtil.addLog(fragment.getContext(), "event-forum-recommend-circle-" + circle.getId());
+                            AppImpl.getAppRroxy().addLog(fragment.getContext(), "event-forum-recommend-circle-" + circle.getId());
                             Intent intent = new Intent(fragment.getActivity(), CircleMainActivity.class);
                             intent.putExtra("circle", circle);
                             fragment.getActivity().startActivity(intent);
@@ -184,7 +188,7 @@ public class SocialCircleFragment extends SocialBaseFragment implements
                         fancyButton.setVisibility(View.GONE);
                     }
                     if (!TextUtils.isEmpty(circle.getAvatar())) {
-                        ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), null,
+                        ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), null,
                                 avatar, ImageManager.circleAvatarOptions);
                     }
 
@@ -216,7 +220,7 @@ public class SocialCircleFragment extends SocialBaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_fragment_social_circle, container, false);
-        ButterKnife.bind(this, view);
+        unbinder= ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
 //        ApiManager.listExpPatient(listBuddyForRecommendListener, 0, getContext(), null, 10);
         ApiManager.listCircleForRecommend(new ListBuddyForRecommendListener(this), 0, getContext());
@@ -245,21 +249,21 @@ public class SocialCircleFragment extends SocialBaseFragment implements
         return view;
     }
 
-    @OnClick(R.id.banner)
+   @OnClick(R2.id.banner)
     void backdropOnClick() {
         if (showLoginDialog())
             return;
         startActivity(new Intent(getActivity(), AllCircleActivity.class));
     }
 
-    @OnClick(R.id.sortMyCircle)
+   @OnClick(R2.id.sortMyCircle)
     void sortMyCircleOnClick() {
         if (showLoginDialog())
             return;
         startActivity(new Intent(getActivity(), SortMyCircleActivity.class));
     }
 
-    @OnClick(R.id.scrollToTop)
+   @OnClick(R2.id.scrollToTop)
     void onScrollToTop(View view) {
         recyclerView.smoothScrollToPosition(0);
     }
@@ -290,7 +294,7 @@ public class SocialCircleFragment extends SocialBaseFragment implements
         EventBus.getDefault().unregister(this);
         dynamicListAdapter = null;
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public void onEventMainThread(FollowCircleEvent event) {

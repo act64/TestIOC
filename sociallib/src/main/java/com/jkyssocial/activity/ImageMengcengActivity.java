@@ -5,17 +5,18 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 
 public class ImageMengcengActivity extends BaseActivity {
 
-    @Bind(R.id.activity_image_shower)
+    @BindView(R2.id.activity_image_shower)
     ImageView activityImageShower;
 
     @Override
@@ -25,7 +26,7 @@ public class ImageMengcengActivity extends BaseActivity {
         ButterKnife.bind(this);
         String imgUrl = getIntent().getStringExtra("imgUrl");
         if (!TextUtils.isEmpty(imgUrl)) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + imgUrl, this, activityImageShower,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + imgUrl, this, activityImageShower,
                     ImageManager.circleAvatarOptions);
         }
     }

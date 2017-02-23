@@ -13,7 +13,6 @@ import com.jkyssocial.data.AddDynamicResult;
 import com.jkyssocial.data.Dynamic;
 import com.jkyssocial.event.PublishDynamicEvent;
 import com.jkyssocial.event.PublishFinishEvent;
-import com.mintcode.area_patient.area_task.TaskAPI;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

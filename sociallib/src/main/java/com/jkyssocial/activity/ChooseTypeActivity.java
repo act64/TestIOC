@@ -2,15 +2,15 @@ package com.jkyssocial.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.*;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.dreamplus.wentang.R;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.jkys.common.widget.CustomToolbar;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.adapter.MultiItemCommonAdapter;
 import com.jkyssocial.adapter.MultiItemTypeSupport;
 import com.jkyssocial.adapter.ViewHolder;
@@ -18,14 +18,15 @@ import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.RequestManager;
 import com.jkyssocial.data.CircleClass;
 import com.jkyssocial.data.CircleClassListResult;
-import com.jkyssocial.data.CircleResult;
 import com.mintcode.base.BaseActivity;
-
-import org.jsoup.helper.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ChooseTypeActivity extends BaseActivity implements AdapterView.OnItemClickListener, MultiItemTypeSupport<CircleClass>, View.OnClickListener {
     private ListView listView;
@@ -36,7 +37,7 @@ public class ChooseTypeActivity extends BaseActivity implements AdapterView.OnIt
     private String CircleType;
     private ImageView checkMaskImg;
 
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
 
     /**
@@ -87,7 +88,7 @@ public class ChooseTypeActivity extends BaseActivity implements AdapterView.OnIt
         datas = new ArrayList<>();
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
@@ -132,7 +133,7 @@ public class ChooseTypeActivity extends BaseActivity implements AdapterView.OnIt
     public void onClick(View v) {
 //        int id = v.getId();
 //        switch (id) {
-//            case R.id.activity_choose_circle_back:
+//            case R2.id.activity_choose_circle_back:
 //                finish();
 //                break;
 //        }

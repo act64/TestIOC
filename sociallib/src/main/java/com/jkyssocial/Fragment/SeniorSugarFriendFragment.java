@@ -11,14 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.dreamplus.wentang.R;
-import de.greenrobot.event.EventBus;
-
 import com.jkys.jkyswidget.MyListView;
+import com.jkys.proxy.AppImpl;
 import com.jkys.tools.DeviceUtil;
 import com.jkyssocial.adapter.SeniorSugarFriendFragmentAdapter;
 import com.jkyssocial.event.FollowUserEvent;
-import com.mintcode.util.LogUtil;
+
+import cn.dreamplus.wentang.R;
+import de.greenrobot.event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +73,7 @@ public class SeniorSugarFriendFragment extends AllCircleBaseFragment {
         swipeRefreshLayout.setOnRefreshListener(adapter);
         listView.setOnLoadListener(adapter);
         listView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        LogUtil.addLog(getContext(), "page-forum-expert-list");
+        AppImpl.getAppRroxy().addLog(getContext(), "page-forum-expert-list");
         //访问网络 数据源变化
         return view;
     }

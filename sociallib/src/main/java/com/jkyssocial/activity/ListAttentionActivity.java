@@ -19,7 +19,9 @@ import android.widget.TextView;
 import com.jkys.jkysbase.data.NetWorkResult;
 import com.jkys.jkyswidget.ConfirmTipsDialog;
 import com.jkys.jkyswidget.MyListView;
-import com.jkys.tools.MainSelector;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
@@ -29,7 +31,6 @@ import com.jkyssocial.event.ChangeUserInfoEvent;
 import com.jkyssocial.event.FollowUserEvent;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -37,8 +38,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -208,7 +207,7 @@ public class ListAttentionActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
@@ -258,7 +257,7 @@ public class ListAttentionActivity extends BaseActivity {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        LogUtil.addLog(this, "page-forum-concern-list");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-concern-list");
 
 
     }
@@ -337,7 +336,7 @@ public class ListAttentionActivity extends BaseActivity {
             }
             holder.position = position;
             if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(),
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(),
                         null, holder.avatar, R.drawable.social_new_avatar);
             } else {
                 holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -368,7 +367,7 @@ public class ListAttentionActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             ViewHolder holder = (ViewHolder) v.getTag();
             Intent intent = new Intent(ListAttentionActivity.this, NewPersonalSpaceActivity.class);
@@ -421,7 +420,7 @@ public class ListAttentionActivity extends BaseActivity {
                     ConfirmTipsDialog dialog = new ConfirmTipsDialog(ListAttentionActivity.this, "确认取消吗？", new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            LogUtil.addLog(ListAttentionActivity.this, "event-forum-cancel-concern");
+                            AppImpl.getAppRroxy().addLog(ListAttentionActivity.this, "event-forum-cancel-concern");
                             ApiManager.followUser(new CancelFollowRequestListener(
                                             ListAttentionActivity.this, holder,
                                             list, ListAttentionAdapter.this), holder.position,
@@ -432,7 +431,7 @@ public class ListAttentionActivity extends BaseActivity {
                     dialog.show();
 
                 } else {
-                    LogUtil.addLog(ListAttentionActivity.this, "event-forum-concern");
+                    AppImpl.getAppRroxy().addLog(ListAttentionActivity.this, "event-forum-concern");
                     ApiManager.followUser(new FollowRequestListener(ListAttentionActivity.this,
                                     holder, list), holder.position, context,
                             buddy.getBuddyId(), 1);

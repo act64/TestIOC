@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    tools:context="com.jkyssocial.activity.ChooseTypeActivity">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:toolbar_title="指定分类" />
+
+    <ListView
+        android:id="@+id/activity_choose_circle_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        android:divider="#E6E6E6"
+        android:dividerHeight="0.5dp" />
+
+
+</LinearLayout>

@@ -17,10 +17,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jkys.common.widget.CustomToolbar;
 import com.jkys.jkysbase.data.NetWorkResult;
 import com.jkys.jkyswidget.ConfirmTipsDialog;
-import com.google.gson.Gson;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.adapter.CircleMainDynamicListAdapter;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
@@ -40,17 +43,13 @@ import com.jkyssocial.listener.EndlessRecyclerOnScrollListener;
 import com.jkyssocial.listener.ListUIListener;
 import com.jkyssocial.listener.ScrollToTopListener;
 import com.mintcode.base.BaseActivity;
-import com.mintcode.util.DensityUtils;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -62,43 +61,43 @@ import mehdi.sakout.fancybuttons.FancyButton;
  */
 public class CircleMainActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
 
-    @Bind(R.id.appBarLayout)
+    @BindView(R2.id.appBarLayout)
     AppBarLayout appBarLayout;
 
-    @Bind(R.id.headerLinear)
+    @BindView(R2.id.headerLinear)
     LinearLayout headerLinear;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.circleSet)
+    @BindView(R2.id.circleSet)
     View circleSet;
 
-    @Bind(R.id.circleAvatar)
+    @BindView(R2.id.circleAvatar)
     ImageView circleAvatar;
 
-    @Bind(R.id.circleDesc)
+    @BindView(R2.id.circleDesc)
     TextView circleDesc;
 
-    @Bind(R.id.title_toolbar)
+    @BindView(R2.id.title_toolbar)
     TextView circleName;
 
-    @Bind(R.id.circleOwnerName)
+    @BindView(R2.id.circleOwnerName)
     TextView circleOwnerName;
 
-    @Bind(R.id.circleUserCount)
+    @BindView(R2.id.circleUserCount)
     TextView circleUserCount;
 
-    @Bind(R.id.scrollToTop)
+    @BindView(R2.id.scrollToTop)
     ImageView scrollToTop;
 
-    @Bind(R.id.empty_view)
+    @BindView(R2.id.empty_view)
     TextView emptyView;
 
     Circle circle;
@@ -260,12 +259,12 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
     }
 
 
-    @Bind(R.id.joinCircle)
+    @BindView(R2.id.joinCircle)
     FancyButton joinCircle;
-    @Bind(R.id.circleHeader)
+    @BindView(R2.id.circleHeader)
     LinearLayout circleHeader;
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void back(View view) {
         setResult(10000);
         finish();
@@ -278,14 +277,14 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
         finish();
     }
 
-    @OnClick(R.id.circleSet)
+    @OnClick(R2.id.circleSet)
     void circleSetOnClick(View view) {
         Intent intent = new Intent(this, SetUpCircleActivity.class);
         intent.putExtra("circle", circle);
         startActivity(intent);
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void publishDynamic(View view) {
         if (circle.getHasMe() == 0) {
             ConfirmTipsDialog dialog = new ConfirmTipsDialog(this, "未加入圈子不能发新动态，是否加入", new View.OnClickListener() {
@@ -319,7 +318,7 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
     }
 
 
-    @OnClick(R.id.joinCircle)
+    @OnClick(R2.id.joinCircle)
     void joinCircleOnClick(View view) {
         if (circle.getHasMe() == 0) {
             ApiManager.followCircle(new AddFollowCircleRequestListener(this), 0, CircleMainActivity.this, circle.getId(), 1);
@@ -352,7 +351,7 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
             final ImageView imageView = (ImageView) guidanceLayout.findViewById(R.id.image_shower);
             final FancyButton fancyButton = (FancyButton) guidanceLayout.findViewById(R.id.i_know);
             fancyButton.setVisibility(View.VISIBLE);
-            imageView.setPadding(DensityUtils.dipTopx(this, 52), DensityUtils.dipTopx(this, 8), 0, 0);
+            imageView.setPadding(dp2px( 52), dp2px(8), 0, 0);
             imageView.setImageResource(R.drawable.social_circle_main_guidance_dynamic);
             guidanceLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -412,7 +411,7 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
         recyclerView.addOnScrollListener(scrollToTopListener);
 
         dynamicListAdapter.create();
-        LogUtil.addLog(this, "page-forum-circle-" + circle.getId());
+        AppImpl.getAppRroxy().addLog(this, "page-forum-circle-" + circle.getId());
 
     }
 
@@ -423,14 +422,14 @@ public class CircleMainActivity extends BaseActivity implements View.OnClickList
         int userCount = circle.getStat() == null ? 0 : circle.getStat().getMemberCount();
         circleUserCount.setText("" + userCount);
         if (!TextUtils.isEmpty(circle.getAvatar())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), null,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), null,
                     circleAvatar, ImageManager.circleAvatarOptions);
         }
 
         setJoinCircle();
     }
 
-    @OnClick(R.id.scrollToTop)
+    @OnClick(R2.id.scrollToTop)
     void onScrollToTop(View view) {
         recyclerView.smoothScrollToPosition(0);
     }

@@ -89,7 +89,7 @@ public class SugarFriendCirclesAdapter extends BaseAdapter {
                     if (position == size) { // 最后一行的更多圈子的点击事件
                         activity.startActivity(new Intent(activity, AllCircleActivity.class));
                     } else if (position < size) {
-                        LogUtil.addLog(activity, "event-forum-recommend-circle-" + circles.get(position).getId());
+                        AppImpl.getAppRroxy().addLog(activity, "event-forum-recommend-circle-" + circles.get(position).getId());
                         Intent intent = new Intent(activity, CircleMainActivity.class);
                         intent.putExtra("circle", circles.get(position));
                         activity.startActivity(intent);
@@ -107,7 +107,7 @@ public class SugarFriendCirclesAdapter extends BaseAdapter {
             holder.mTitle.setText(circle.getTitle() + "");
             holder.mTitle.setTextColor(Color.parseColor("#333333"));
             if (!TextUtils.isEmpty(circle.getAvatar())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(),
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(),
                         activity.getApplicationContext(), holder.mImage, R.drawable.social_circle_avatar);
             } else {
                 holder.mImage.setImageResource(R.drawable.social_circle_avatar);

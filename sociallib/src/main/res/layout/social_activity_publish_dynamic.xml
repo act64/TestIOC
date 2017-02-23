@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:right_firstText="发布"
+        app:toolbar_title="发布动态"/>
+
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/default_toolbar_height"-->
+        <!--android:background="@color/social_primary"-->
+        <!--app:contentInsetStart="10dp">-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/default_toolbar_height">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/back"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:src="@drawable/social_back_new" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/toolbarTitle"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:text="发布动态"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="20dp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/publishBtn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:gravity="center"-->
+                <!--android:paddingLeft="12dp"-->
+                <!--android:paddingRight="12dp"-->
+                <!--android:text="发布"-->
+                <!--android:textColor="@color/publish_bg"-->
+                <!--android:textSize="18sp" />-->
+
+        <!--</RelativeLayout>-->
+    <!--</android.support.v7.widget.Toolbar>-->
+
+    <LinearLayout
+        android:id="@+id/mainArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="start"
+            android:hint="标题"
+            android:inputType="textMultiLine"
+            android:maxLength="1000"
+            android:maxLines="6"
+            android:paddingTop="10dp"
+            android:textColor="@color/text_333333"
+            android:textColorHint="@color/text_999999"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/titleDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/health_grayE6" />
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="start"
+            android:hint="好内容可以上热门推荐哦！"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:maxLength="1000"
+            android:paddingTop="10dp"
+            android:textColor="@color/text_333333"
+            android:textColorHint="@color/text_999999"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <com.mintcode.widget.MyGridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="5"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/mainArea"
+        android:background="@color/health_grayE6" />
+
+    <RelativeLayout
+        android:id="@+id/select_circle_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainArea"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/select_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp"
+            android:text="选择圈子"
+            android:textColor="@color/text_333333"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/select_circle_right_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/icon_right_driection" />
+
+        <TextView
+            android:id="@+id/select_circle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@id/select_circle_right_icon"
+            android:textColor="@color/text_333333"
+            android:textSize="14sp"
+            tools:text="我的空间我的空间" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/editLinear"
+        layout="@layout/social_include_send_message_publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AF000000"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image_shower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:paddingTop="7dp"
+        android:src="@drawable/social_main_guidance_see_personal" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/i_know"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:paddingLeft="26dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="26dp"
+        fancy:fb_radius="4dp"
+        fancy:fb_borderColor="@color/white"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/transparent"
+        fancy:fb_text="我知道了"
+        fancy:fb_textColor="@color/white"
+        fancy:fb_textSize="20sp" />
+</RelativeLayout>

@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.MainSelector;
 import com.jkysshop.model.ShopLoginStatus;
 import com.jkyssocial.activity.MessageCenterActivity;
 import com.jkyssocial.activity.NewPersonalSpaceActivity;
 import com.jkyssocial.activity.PublishDynamicActivity;
-import com.jkyssocial.activity.NewSocialMainActivity;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
@@ -30,21 +30,22 @@ import com.jkyssocial.data.GetUserInfoResult;
 import com.jkyssocial.event.ChangSocialMessageEvent;
 import com.jkyssocial.event.ChangeUserInfoEvent;
 import com.jkyssocial.pageradapter.CircleFragmentPagerAdapter;
-import com.mintcode.util.DensityUtils;
+import com.mintcode.util.Const;
 import com.mintcode.util.ImageManager;
 import com.mintcode.util.Keys;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
-import cn.dreamplus.wentang.BuildConfig;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
+
+import static butterknife.ButterKnife.bind;
 
 /**
  * 糖友圈社区首页
@@ -57,45 +58,46 @@ public class SocialMainFragment extends SocialBaseFragment {
     private static final int LATEST_DYNAMIC_READ = 2;
     private static final int DYNAMIC_DETAIL = 3;
 
-    @Bind(R.id.main_content)
+    @BindView(R2.id.main_content)
     View rootView;
 
-    @Bind(R.id.viewPager)
+    @BindView(R2.id.viewPager)
     ViewPager viewPager;
 
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.tabLayout)
+    @BindView(R2.id.tabLayout)
     TabLayout tabLayout;
 
     /**
      * 小圆点的父控件
      */
-//    @Bind(R.id.ll_dot)
+//    @BindView(R2.id.ll_dot)
 //    LinearLayout llDot;
 
-    @Bind(R.id.my_avatar)
+    @BindView(R2.id.my_avatar)
     ImageView myAvatar;
 
-    @Bind(R.id.message_unread_num)
+    @BindView(R2.id.message_unread_num)
     TextView messageUnreadNum;
 
-    @Bind(R.id.message_unread_Layout)
+    @BindView(R2.id.message_unread_Layout)
     RelativeLayout messageUnreadLayout;
 
-    @Bind(R.id.guidance)
+    @BindView(R2.id.guidance)
     ViewStub guidance;
 
-//    @Bind(R.id.social_main_swipeRefreshLayout)
+//    @BindView(R2.id.social_main_swipeRefreshLayout)
 //    SwipeRefreshLayout swipeRefreshLayout;
 
-//    @Bind(R.id.send_dynamic)
+//    @BindView(R2.id.send_dynamic)
 //    TextView sendDynamicTv;
 
     CircleFragmentPagerAdapter pagerAdapter;
 
     private Buddy myBuddy;
+    private Unbinder unbinder;
 
     static class GetUserInfoRequestListener implements RequestManager.RequestListener<GetUserInfoResult> {
         WeakReference<SocialMainFragment> fragmentWR;
@@ -113,7 +115,7 @@ public class SocialMainFragment extends SocialBaseFragment {
                 if (data != null && data.getBuddy() != null) {
                     fragment.myBuddy = data.getBuddy();
                     if (fragment.myAvatar != null && !TextUtils.isEmpty(fragment.myBuddy.getImgUrl())) {
-                        ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + fragment.myBuddy.getImgUrl(),
+                        ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + fragment.myBuddy.getImgUrl(),
                                 fragment.getContext(), fragment.myAvatar, ImageManager.avatarOptions);
                     }
                 }
@@ -134,7 +136,7 @@ public class SocialMainFragment extends SocialBaseFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.social_fragment_social_main, container, false);
-        ButterKnife.bind(this, view);
+        unbinder= ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         if (CommonInfoManager.showGuidance(getContext(), getClass().getName())) {
             final RelativeLayout guidanceLayout = (RelativeLayout) guidance.inflate();
@@ -142,12 +144,12 @@ public class SocialMainFragment extends SocialBaseFragment {
             final FancyButton fancyButton = (FancyButton) guidanceLayout.findViewById(R.id.i_know);
 //            fancyButton.setVisibility(View.GONE);
             fancyButton.setVisibility(View.VISIBLE);
-            imageView.setPadding(0, 0, DensityUtils.dipTopx(getContext(), 15), 0);
+            imageView.setPadding(0, 0, Const.dp2px(getActivity().getApplicationContext(),15), 0);
             imageView.setImageResource(R.drawable.social_main_guidance_see_personal);
             guidanceLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    imageView.setPadding(DensityUtils.dipTopx(getContext(), 10), DensityUtils.dipTopx(getContext(), 7), 0, 0);
+//                    imageView.setPadding(dp2pxgetContext(), 10), dp2pxgetContext(), 7), 0, 0);
 //                    imageView.setImageResource(R.drawable.social_main_guidance_add_circle);
 //                    fancyButton.setVisibility(View.VISIBLE);
                     guidanceLayout.setVisibility(View.GONE);
@@ -162,7 +164,7 @@ public class SocialMainFragment extends SocialBaseFragment {
         }
 //        if("Xiaomi".equalsIgnoreCase(Build.MANUFACTURER)){
 //            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar.getLayoutParams();
-//            layoutParams.height = DensityUtils.dipTopx(getContext(), 70);
+//            layoutParams.height = dp2pxgetContext(), 70);
 //            toolbar.setLayoutParams(layoutParams);
 //        }
         viewPager.setAdapter(pagerAdapter);
@@ -180,9 +182,9 @@ public class SocialMainFragment extends SocialBaseFragment {
         return view;
     }
 
-    @OnClick(R.id.avatarArea)
+   @OnClick(R2.id.avatarArea)
     public void goToPersonalSpace(View view) {
-        if (MainSelector.isNeedNewMain())
+        if (AppImpl.getAppRroxy().isNeedNewMain() )
             return;
         if (showLoginDialog())
             return;
@@ -197,7 +199,7 @@ public class SocialMainFragment extends SocialBaseFragment {
 
     public final static String from = "SocialMain";
 
-    @OnClick(R.id.send_dynamic)
+   @OnClick(R2.id.send_dynamic)
     void publishDynamic(View view) {
         if (showLoginDialog())
             return;
@@ -208,7 +210,7 @@ public class SocialMainFragment extends SocialBaseFragment {
         }
     }
 
-    @OnClick(R.id.message_unread_num)
+   @OnClick(R2.id.message_unread_num)
     public void goToMessageCenter(View view) {
         if (showLoginDialog())
             return;
@@ -219,7 +221,7 @@ public class SocialMainFragment extends SocialBaseFragment {
     @OnPageChange(value = R.id.viewPager, callback = OnPageChange.Callback.PAGE_SELECTED)
     void onPageSelected(int position) {
         if (position == 1) {
-            LogUtil.addLog(getContext(), "event-forum-circle-tab");
+            AppImpl.getAppRroxy().addLog(getContext(), "event-forum-circle-tab");
         }
     }
 
@@ -259,7 +261,7 @@ public class SocialMainFragment extends SocialBaseFragment {
         if (buddy != null) {
             myBuddy = buddy;
             if (myAvatar != null && !TextUtils.isEmpty(myBuddy.getImgUrl())) {
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + myBuddy.getImgUrl(), getContext(),
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + myBuddy.getImgUrl(), getContext(),
                         myAvatar, ImageManager.avatarOptions);
             }
         }
@@ -269,6 +271,6 @@ public class SocialMainFragment extends SocialBaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

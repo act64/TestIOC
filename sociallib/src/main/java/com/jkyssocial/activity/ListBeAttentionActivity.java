@@ -19,7 +19,9 @@ import android.widget.TextView;
 import com.jkys.jkysbase.data.NetWorkResult;
 import com.jkys.jkyswidget.ConfirmTipsDialog;
 import com.jkys.jkyswidget.MyListView;
-import com.jkys.tools.MainSelector;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
@@ -29,7 +31,6 @@ import com.jkyssocial.event.ChangeUserInfoEvent;
 import com.jkyssocial.event.FollowUserEvent;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -37,8 +38,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -195,7 +194,7 @@ public class ListBeAttentionActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
@@ -238,7 +237,7 @@ public class ListBeAttentionActivity extends BaseActivity {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        LogUtil.addLog(this, "page-forum-concerned-list");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-concerned-list");
 
 
     }
@@ -316,7 +315,7 @@ public class ListBeAttentionActivity extends BaseActivity {
             }
             holder.position = position;
             if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(),
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(),
                         null, holder.avatar, R.drawable.social_new_avatar);
             } else {
                 holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -347,7 +346,7 @@ public class ListBeAttentionActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             ViewHolder holder = (ViewHolder) v.getTag();
             Intent intent = new Intent(ListBeAttentionActivity.this, NewPersonalSpaceActivity.class);
@@ -421,7 +420,7 @@ public class ListBeAttentionActivity extends BaseActivity {
                     ConfirmTipsDialog dialog = new ConfirmTipsDialog(ListBeAttentionActivity.this, "确认取消吗？", new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            LogUtil.addLog(ListBeAttentionActivity.this, "event-forum-cancel-concern");
+                            AppImpl.getAppRroxy().addLog(ListBeAttentionActivity.this, "event-forum-cancel-concern");
                             ApiManager.followUser(new CancelFollowRequestListener(ListBeAttentionActivity.this, holder, list), holder.position, context, buddy.getBuddyId(), 0);
 
 //                            ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
@@ -453,7 +452,7 @@ public class ListBeAttentionActivity extends BaseActivity {
 //                    ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
 //                        @Override
 //                        public void processResult(int requestCode, int resultCode, NetWorkResult data) {
-//                            LogUtil.addLog(ListBeAttentionActivity.this, "event-forum-concern");
+//                            AppImpl.getAppRroxy().addLog(ListBeAttentionActivity.this, "event-forum-concern");
 //                            if (resultCode == RequestManager.RESULT_SUCCESS_CODE) {
 //                                EventBus.getDefault().post(new ChangeUserInfoEvent());
 //                                EventBus.getDefault().post(new FollowUserEvent(buddy.getBuddyId(), 1));

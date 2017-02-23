@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jkyssocial.activity.SortMyCircleActivity">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:toolbar_title="排位设置"
+        app:right_firstText="确定"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/default_toolbar_height"-->
+        <!--android:background="#4991FD"-->
+        <!--android:padding="12dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/acitivity_sort_my_back"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:drawableLeft="@drawable/common_navigation_btn_back_nor" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/acitivity_sort_my_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:text=""-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="20sp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/acitivity_sort_my_confirm"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="确定"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="16sp"-->
+            <!--android:visibility="invisible" />-->
+    <!--</RelativeLayout>-->
+
+    <com.jkyssocial.widget.DragSortListView
+        android:id="@+id/acitivity_sort_my_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_page"
+        android:cacheColorHint="@color/bg_page"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:divider="#CCCCCC"
+        android:dividerHeight="0.5dp"
+        android:footerDividersEnabled="false"
+        android:listSelector="#00000000"
+        android:scrollbars="none"
+        app:drag_enabled="true"
+        app:drag_start_mode="onLongPress"
+        app:float_alpha="0.6" />
+</LinearLayout>

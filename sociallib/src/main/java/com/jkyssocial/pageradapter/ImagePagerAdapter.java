@@ -78,7 +78,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements OnClickL
             holder = (ViewHolder) convertView.getTag(R.id.tag_first);
         }
         if (!TextUtils.isEmpty(imageShow)) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + ImageUtil.getSmallImageUrl(imageShow),
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + ImageUtil.getSmallImageUrl(imageShow),
                     context, holder.littleImage);
         }
 
@@ -98,7 +98,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements OnClickL
         });
         holder.bigImage.setOnClickListener(this);
         if (!TextUtils.isEmpty(imageShow)) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + imageShow, context,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + imageShow, context,
                     holder.bigImage, new MyImageLoaderListener());
         }
 

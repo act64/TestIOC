@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jkys.jkyswidget.ConfirmTipsDialog;
+import com.jkys.sociallib.R;
 import com.jkyssocial.pageradapter.RecyclingPagerAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,7 +21,6 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.dreamplus.wentang.R;
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase;
 

@@ -165,7 +165,7 @@ public class SortMyCircleActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.right_rl:
+            case R2.id.right_rl:
                 final LinkedList<String> list = new LinkedList<>();
                 if (circles.size() != 0 && !circles.isEmpty()) {
                     for (Circle circle : circles) {
@@ -176,7 +176,7 @@ public class SortMyCircleActivity extends BaseActivity implements View.OnClickLi
                         requestCode, SortMyCircleActivity.this, list);
 
                 break;
-            case R.id.left_rl:
+            case R2.id.left_rl:
                 finish();
                 break;
         }
@@ -268,7 +268,7 @@ public class SortMyCircleActivity extends BaseActivity implements View.OnClickLi
                 holder.item_allcircle_member.setText("成员: " + circle.getStat().getMemberCount());
             // 圈子的头像
             if (!TextUtils.isEmpty(circle.getAvatar())) {
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), context,
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), context,
                         holder.item_allcircle_img, ImageManager.circleAvatarOptions);
             }
 

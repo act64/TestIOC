@@ -16,14 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jkys.jkyswidget.MyListView;
-import com.jkys.tools.MainSelector;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.RequestManager;
 import com.jkyssocial.data.Buddy;
 import com.jkyssocial.data.ListBuddyResult;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,8 +32,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 
 
 /**
@@ -52,7 +51,7 @@ public class ListZanActivity extends BaseActivity {
 
     String dynamicId;
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
@@ -86,7 +85,7 @@ public class ListZanActivity extends BaseActivity {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        LogUtil.addLog(this, "page-forum-praise-list");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-praise-list");
 
 
     }
@@ -216,7 +215,7 @@ public class ListZanActivity extends BaseActivity {
             }
             holder.position = position;
             if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(),
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(),
                         null, holder.avatar, R.drawable.social_new_avatar);
             } else {
                 holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -229,7 +228,7 @@ public class ListZanActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             ViewHolder holder = (ViewHolder) v.getTag();
             Intent intent = new Intent(ListZanActivity.this, NewPersonalSpaceActivity.class);

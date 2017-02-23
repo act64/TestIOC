@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page"
+    >
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/all_circle_type_swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.jkys.jkyswidget.MyListView
+            android:id="@+id/all_circle_type_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:background="@color/bg_page"
+            android:cacheColorHint="@color/bg_page"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:divider="@color/health_grayE6"
+            android:dividerHeight="0.5dp"
+            android:footerDividersEnabled="false"
+            android:listSelector="#00000000"
+            android:scrollbars="none" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

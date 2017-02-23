@@ -7,18 +7,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import com.jkys.jkyswidget.MyListView;
-import com.jkys.tools.DeviceUtil;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.adapter.MultiItemCommonAdapter;
 import com.jkyssocial.adapter.MultiItemTypeSupport;
 import com.jkyssocial.adapter.ViewHolder;
@@ -29,11 +23,14 @@ import com.jkyssocial.data.Circle;
 import com.jkyssocial.data.CircleFansResult;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CircleMemberActivity extends BaseActivity implements MultiItemTypeSupport<Buddy>, AdapterView.OnItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, MyListView.OnLoadListener {
     private MultiItemCommonAdapter adapter;
@@ -52,10 +49,10 @@ public class CircleMemberActivity extends BaseActivity implements MultiItemTypeS
         initData();
         // 网络请求 加载 Circle 的详情
         getData(null);
-        LogUtil.addLog(this, "page-forum-circle-member");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-circle-member");
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void back(View view) {
         finish();
     }
@@ -134,7 +131,7 @@ public class CircleMemberActivity extends BaseActivity implements MultiItemTypeS
                     // 加载成员的头像
                     if (!TextUtils.isEmpty(buddy.getImgUrl())) {
                         ImageManager.loadImage(
-                                BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(),
+                                 AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(),
                                 CircleMemberActivity.this,
                                 (CircleImageView) holder.getView(R.id.avatar), ImageManager.avatarOptions);
                     }
@@ -160,7 +157,7 @@ public class CircleMemberActivity extends BaseActivity implements MultiItemTypeS
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
-        acivity_circle_member_swipeLayout.setProgressViewOffset(true, 190 * DeviceUtil.getDensity(), 240 * DeviceUtil.getDensity());
+        acivity_circle_member_swipeLayout.setProgressViewOffset(true, dp2px(190), dp2px(240));
         acivity_circle_member_swipeLayout.setOnRefreshListener(this);
         acivity_circle_member_swipeLayout.setRefreshing(true);
         listView = (MyListView) findViewById(R.id.acivity_circle_member_listView);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+    <ImageView
+        android:id="@+id/littleImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop">
+    </ImageView>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginRight="10dp"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/bigImage"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:scaleType="fitCenter">-->
+    <!--</ImageView>-->
+    <it.sephiroth.android.library.imagezoom.ImageViewTouch
+        android:id="@+id/bigImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+</RelativeLayout>

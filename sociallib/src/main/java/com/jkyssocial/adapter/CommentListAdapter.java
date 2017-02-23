@@ -159,7 +159,7 @@ public class CommentListAdapter extends BaseAdapter implements SwipeRefreshLayou
             holder = (ViewHolder) convertView.getTag();
         }
         if (!TextUtils.isEmpty(comment.getOwner().getImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + comment.getOwner().getImgUrl(),
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + comment.getOwner().getImgUrl(),
                     null, holder.avatar, R.drawable.social_new_avatar);
         } else {
             holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -403,7 +403,7 @@ public class CommentListAdapter extends BaseAdapter implements SwipeRefreshLayou
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             if (v.getTag(R.id.tag_third) != null) {
                 v.setTag(R.id.tag_third, null);
@@ -427,7 +427,7 @@ public class CommentListAdapter extends BaseAdapter implements SwipeRefreshLayou
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             if (activityWR == null || activityWR.get() == null)
                 return;

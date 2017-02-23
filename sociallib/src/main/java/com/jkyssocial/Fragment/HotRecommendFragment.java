@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jkys.jkysim.database.KeyValueDBService;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.DeviceUtil;
 import com.jkyshealth.tool.ViewUtil;
 import com.jkyslogin.LoginHelper;
@@ -39,11 +41,11 @@ import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -51,16 +53,16 @@ import de.greenrobot.event.EventBus;
  */
 public class HotRecommendFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.scrollToTop)
+    @BindView(R2.id.scrollToTop)
     ImageView scrollToTop;
 
-    @Bind(R.id.recommend_rl_show)
+    @BindView(R2.id.recommend_rl_show)
     RelativeLayout recommend_rl_show;
 
     public static Buddy myBuddy;
@@ -72,6 +74,7 @@ public class HotRecommendFragment extends Fragment implements SwipeRefreshLayout
     LinearLayoutManager linearLayoutManager;
 
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
+    private Unbinder unbinder;
 
     static class ListUIListenerImpl implements ListUIListener {
         private WeakReference<HotRecommendFragment> fragmentWR;
@@ -134,7 +137,7 @@ public class HotRecommendFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_fragment_hot_recommend, container, false);
-        ButterKnife.bind(this, view);
+      unbinder=  ButterKnife.bind(this, view);
 
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -234,7 +237,7 @@ public class HotRecommendFragment extends Fragment implements SwipeRefreshLayout
         }
     };
 
-    @OnClick(R.id.scrollToTop)
+   @OnClick(R2.id.scrollToTop)
     void onScrollToTop(View view) {
         recyclerView.stopScroll();
         recyclerView.getLayoutManager().scrollToPosition(0);
@@ -289,21 +292,21 @@ public class HotRecommendFragment extends Fragment implements SwipeRefreshLayout
         super.onDestroyView();
         dynamicListAdapter = null;
         EventBus.getDefault().unregister(this);
-        ButterKnife.unbind(this);
+       unbinder.unbind();
     }
 
     @Override
     public void onClick(View v) {
         if (LoginHelper.getInstance().showLoginActivity(getActivity())) return;
         switch (v.getId()) {
-            case R.id.social_main_mycircle:
-            case R.id.social_main_mycircle_icon:
+            case R2.id.social_main_mycircle:
+            case R2.id.social_main_mycircle_icon:
                 if (!ViewUtil.singleClick()) return;
                 Intent intent = new Intent(getActivity(), MyEnterCircleActivity.class);
                 intent.putExtra("myBuddy", myBuddy);
                 startActivity(intent);
                 break;
-            case R.id.findMoreSuperStar:
+            case R2.id.findMoreSuperStar:
                 startActivity(new Intent(getActivity(), SugarControlStarActivity.class));
                 break;
         }

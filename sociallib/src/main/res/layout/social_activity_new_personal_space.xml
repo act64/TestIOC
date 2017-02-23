@@ -1,0 +1,374 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    
+        <FrameLayout
+            android:id="@+id/tab_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/new_personal_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                app:tabGravity="fill"
+                app:tabIndicatorHeight="0dp"
+                app:tabTextAppearance="@style/tabLayoutSmall" />
+            
+            <View
+                android:layout_width="0.5dp"
+                android:layout_gravity="center"
+                android:background="@color/health_grayE6"
+                android:layout_height="24dp"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E6E6E6" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/new_personal_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipeRefreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/recyclerView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:paddingLeft="5dp"-->
+                <!--android:paddingRight="5dp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_bg_message"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="100dp"-->
+                <!--android:text="空间空空如也"-->
+                <!--android:textColor="#999999"-->
+                <!--android:textSize="16sp"-->
+                <!--android:visibility="gone" />-->
+        <!--</FrameLayout>-->
+
+
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_behavior="com.jkyssocial.common.behavior.FlingBehavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/social_primary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/personalSpaceHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true">
+
+                    <ImageView
+                        android:id="@+id/backgroundImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/circleHeaderLL"
+                        android:layout_alignLeft="@+id/circleHeaderLL"
+                        android:layout_alignRight="@+id/circleHeaderLL"
+                        android:layout_alignTop="@+id/circleHeaderLL"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/social_personal_space_bg" />
+
+                    <LinearLayout
+                        android:id="@+id/circleHeaderLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="50dp"
+                        android:paddingRight="50dp"
+                        android:paddingTop="30dp">
+
+                        <include
+                            layout="@layout/social_new_avatar"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="6dp" />
+
+                        <TextView
+                            android:id="@+id/userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="4dp"
+                            android:shadowColor="#A0000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="1"
+                            android:singleLine="true"
+                            android:text="ELEAN"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/first_attr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="4dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:shadowColor="#A0000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="1"
+                            android:text="糖尿病 1 型 5年"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/signature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:shadowColor="#A0000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="1"
+                            android:text="萌萌哒，比较二的吃货女汉子"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@+id/attentionBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="6dp"
+                        fancy:fb_borderColor="@color/white"
+                        fancy:fb_borderWidth="1dp"
+                        fancy:fb_defaultColor="@color/transparent"
+                        fancy:fb_radius="3dp"
+                        fancy:fb_text="关注"
+                        fancy:fb_textColor="@color/white"
+                        fancy:fb_textSize="14sp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dp">
+
+                    <TextView
+                        android:id="@+id/attention"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text=" 31 \n 关注"
+                        android:textColor="@color/dark_black"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="24dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:background="@color/health_grayE6" />
+
+                    <TextView
+                        android:id="@+id/beAttention"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text=" 41 \n 被关注"
+                        android:textColor="@color/dark_black"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="24dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:background="@color/health_grayE6" />
+
+                    <TextView
+                        android:id="@+id/circle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="52\n 圈子"
+                        android:textColor="@color/dark_black"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="24dp"
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:background="@color/health_grayE6" />
+
+                    <RelativeLayout
+                        android:id="@+id/messageArea"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
+
+                        <TextView
+                            android:id="@+id/message"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=" 52 \n 消息"
+                            android:textColor="@color/dark_black"
+                            android:textSize="14sp" />
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/unreadNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="-4dp"
+                            android:gravity="center"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="6dp"
+                            android:paddingRight="6dp"
+                            android:paddingTop="2dp"
+                            android:visibility="gone"
+                            fancy:fb_borderColor="@color/white"
+                            fancy:fb_borderWidth="1dp"
+                            fancy:fb_defaultColor="#FF5500"
+                            fancy:fb_radius="9dp"
+                            fancy:fb_text="99"
+                            fancy:fb_textColor="@color/white"
+                            fancy:fb_textSize="10sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#CCCCCC" />
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_toolbar_height"
+                android:fitsSystemWindows="true"
+                app:contentInsetStart="10dp"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_toolbar_height">
+
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/social_back_new" />
+
+                    <TextView
+                        android:id="@+id/toolbarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="xxx的空间"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:id="@+id/publishDynamic"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/social_icon_publish" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/scrollToTop"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="bottom|right"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:src="@drawable/social_scroll_to_top"-->
+        <!--android:visibility="gone" />-->
+
+    <ViewStub
+        android:id="@+id/guidance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/social_guidance" />
+
+</android.support.design.widget.CoordinatorLayout>

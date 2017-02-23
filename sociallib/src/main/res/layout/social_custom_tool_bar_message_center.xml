@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/social_primary"
+    app:contentInsetStart="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/social_back_new" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true">
+
+            <com.jkys.jkyswidget.CustomSpinner
+                android:id="@+id/spinner"
+                style="@style/SpinnerAppTheme"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/img_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="115dp"
+                android:layout_centerVertical="true"
+                android:scaleType="center"
+                android:src="@drawable/social_message_jiantou" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

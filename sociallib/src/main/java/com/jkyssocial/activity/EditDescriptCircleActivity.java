@@ -7,14 +7,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.util.EditTextShakeHelper;
 import com.mintcode.base.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.R;
 
 public class EditDescriptCircleActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
     private EditText activity_edit_circle_descript_content ;
@@ -46,12 +46,12 @@ public class EditDescriptCircleActivity extends BaseActivity implements View.OnC
         }
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void back(View view) {
         finish();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void confirm(View view) {
         Intent intent = new Intent() ;
         intent.putExtra("descript",activity_edit_circle_descript_content.getText()+ "") ;

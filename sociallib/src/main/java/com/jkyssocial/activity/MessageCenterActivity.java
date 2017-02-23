@@ -22,11 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jkys.common.listeners.SocailTaskListener;
 import com.jkys.jkysbase.BaseCommonUtil;
 import com.jkys.jkysbase.TimeUtil;
 import com.jkys.jkyswidget.CustomSpinner;
 import com.jkys.jkyswidget.MyListView;
-import com.jkys.tools.MainSelector;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
@@ -36,22 +38,14 @@ import com.jkyssocial.data.Dynamic;
 import com.jkyssocial.data.ListMessageResult;
 import com.jkyssocial.data.Message;
 import com.jkyssocial.event.ChangSocialMessageEvent;
-import com.mintcode.area_patient.area_task.TaskAPI;
-import com.mintcode.area_patient.area_task.TaskListener;
 import com.mintcode.base.BaseActivity;
-import com.mintcode.database.CasheDBService;
 import com.mintcode.util.ImageManager;
 import com.mintcode.util.Keys;
-import com.mintcode.util.LogUtil;
-
-import org.jsoup.helper.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 
@@ -107,7 +101,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
                 activity.editLinear.setVisibility(View.GONE);
                 BaseCommonUtil.hideKeyBoard(activity);
                 activity.editText.setText(null);
-                TaskAPI.getInstance(activity.getApplicationContext()).getTaskReward(new TaskListener(activity, "每天第一次回复"), "article/reply");
+                AppImpl.getAppRroxy().getTaskReward(new SocailTaskListener(activity, "每天第一次回复"), "article/reply");
                 Toast.makeText(activity.getApplicationContext(), "回复成功", Toast.LENGTH_SHORT).show();
             }
         }
@@ -228,7 +222,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
         editText = (EditText) editLinear.findViewById(R.id.commentEdit);
         sendComment = (TextView) editLinear.findViewById(R.id.sendComment);
 
-        LogUtil.addLog(this, "page-forum-topic-list");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-topic-list");
 
 
     }
@@ -246,7 +240,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
     public void onPause() {
         super.onPause();
         if (firstReadSuccess) {
-            CasheDBService.getInstance(MessageCenterActivity.this).delete(Keys.SOCIAL_MESSAGE_UNREAD_NUM);
+           AppImpl.getAppRroxy().deleteCashDBServiceKey(Keys.SOCIAL_MESSAGE_UNREAD_NUM);
             setResult(SUCCESS);
         }
     }
@@ -381,7 +375,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
             holder.position = position;
             if (message.getCreator() != null) {
                 if (!TextUtils.isEmpty(message.getCreator().getImgUrl())) {
-                    ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH
+                    ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                     + message.getCreator().getImgUrl(), null,
                             holder.avatar, R.drawable.social_new_avatar);
                 } else {
@@ -398,7 +392,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
                 if (message.getDynamic().getImages() != null && message.getDynamic().getImages().size() > 0) {
                     String url = message.getDynamic().getImages().get(0);
                     if (!TextUtils.isEmpty(url)) {
-                        ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + url, null, holder.contentImage);
+                        ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + url, null, holder.contentImage);
                     }
 
                     holder.contentImage.setVisibility(View.VISIBLE);
@@ -530,7 +524,7 @@ public class MessageCenterActivity extends BaseActivity implements View.OnTouchL
         class GoPersonalSpaceClickListener implements View.OnClickListener {
             @Override
             public void onClick(View v) {
-                if (MainSelector.isNeedNewMain())
+                if (AppImpl.getAppRroxy().isNeedNewMain() )
                     return;
                 ViewHolder holder = (ViewHolder) v.getTag();
                 int position = holder.position;

@@ -22,7 +22,8 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // apt 注入
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
         //引入自动化多渠道打包的gradle插件
         classpath 'com.jkys.gradle.plugin:mcpplugin:1.0.1'
         // NOTE: Do not place your application dependencies here; they belong

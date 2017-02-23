@@ -72,7 +72,7 @@ public class RecommendDynamicListAdapter extends NewDynamicListAdapter {
                 ImageView vFlag = (ImageView) view.findViewById(R.id.vFlag);
                 TextView userTitle = (TextView) view.findViewById(R.id.userTitle);
                 TextView userName = (TextView) view.findViewById(R.id.userName);
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
                 ImageManager.setVFlag(vFlag, buddy1);
                 userName.setText(buddy1.getUserName());
                 userTitle.setText(buddy1.getUserType() == 1 ? "专家医生" : "资深糖友");
@@ -80,9 +80,9 @@ public class RecommendDynamicListAdapter extends NewDynamicListAdapter {
                     @Override
                     public void onClick(View v) {
                         if (LoginHelper.getInstance().showLoginActivity((Activity) context)) return;
-                        if (MainSelector.isNeedNewMain())
+                        if (AppImpl.getAppRroxy().isNeedNewMain() )
                             return;
-                        LogUtil.addLog(context, "event-forum-recommend-expert-" + buddy1.getBuddyId());
+                        AppImpl.getAppRroxy().addLog(context, "event-forum-recommend-expert-" + buddy1.getBuddyId());
                         Intent intent = new Intent(context, NewPersonalSpaceActivity.class);
                         intent.putExtra("otherBuddy", buddy1);
                         context.startActivity(intent);
@@ -118,22 +118,22 @@ public class RecommendDynamicListAdapter extends NewDynamicListAdapter {
     }
 
     public static class SocialMainHeadHolder extends DynamicTextViewHolder {
-        @Bind(R.id.social_main_gridView)
+        @BindView(R2.id.social_main_gridView)
         public GridView mGridView;
 
-        @Bind(R.id.recommend_rl)
+        @BindView(R2.id.recommend_rl)
         public RelativeLayout recommendRl;
 
-        @Bind(R.id.headerLinear)
+        @BindView(R2.id.headerLinear)
         public LinearLayout headerLinear;
 
-        @Bind(R.id.findMoreSuperStar)
+        @BindView(R2.id.findMoreSuperStar)
         public TextView findMoreSuperStar;
 
-        @Bind(R.id.social_main_mycircle_icon)
+        @BindView(R2.id.social_main_mycircle_icon)
         public ImageView social_main_mycircle_icon;
 
-        @Bind(R.id.social_main_mycircle)
+        @BindView(R2.id.social_main_mycircle)
         public TextView social_main_mycircle;
 
         public SocialMainHeadHolder(View itemView) {
@@ -152,14 +152,14 @@ public class RecommendDynamicListAdapter extends NewDynamicListAdapter {
             }
             if (LoginHelper.getInstance().showLoginActivity(topActivity)) return;
             switch (v.getId()) {
-                case R.id.social_main_mycircle:
-                case R.id.social_main_mycircle_icon:
+                case R2.id.social_main_mycircle:
+                case R2.id.social_main_mycircle_icon:
                     if (!ViewUtil.singleClick()) return;
                     Intent intent = new Intent(topActivity, MyEnterCircleActivity.class);
                     intent.putExtra("myBuddy", HotRecommendFragment.myBuddy);
                     topActivity.startActivity(intent);
                     break;
-                case R.id.findMoreSuperStar:
+                case R2.id.findMoreSuperStar:
                     topActivity.startActivity(new Intent(topActivity, SugarControlStarActivity.class));
                     break;
             }

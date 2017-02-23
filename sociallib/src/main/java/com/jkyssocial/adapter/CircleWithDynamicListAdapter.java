@@ -101,7 +101,7 @@ public class CircleWithDynamicListAdapter extends RecyclerView.Adapter<CircleWit
     public void onBindViewHolder(CircleViewHolder holder, int position) {
         Circle circle = getItem(position);
         if (!TextUtils.isEmpty(circle.getAvatar())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + circle.getAvatar(), null,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + circle.getAvatar(), null,
                     holder.avatarIV, ImageManager.circleAvatarOptions);
         }
 
@@ -122,7 +122,7 @@ public class CircleWithDynamicListAdapter extends RecyclerView.Adapter<CircleWit
                 dynamicView.createdTimeTV.setText(TimeUtil.getInterval(dynamic.getCreatedTime()));
                 String imgUrl = dynamic.getOwner().getImgUrl();
                 if (!TextUtils.isEmpty(imgUrl)) {
-                    ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + imgUrl, null,
+                    ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + imgUrl, null,
                             dynamicView.avatarIV, ImageManager.avatarOptions);
                 }
 
@@ -218,19 +218,19 @@ public class CircleWithDynamicListAdapter extends RecyclerView.Adapter<CircleWit
 
     public static class CircleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.rootView)
+        @BindView(R2.id.rootView)
         public View rootView;
 
-        @Bind(R.id.avatar)
+        @BindView(R2.id.avatar)
         public RoundedImageView avatarIV;
 
-        @Bind(R.id.circleName)
+        @BindView(R2.id.circleName)
         public TextView circleNameTV;
 
-        @Bind(R.id.todayCount)
+        @BindView(R2.id.todayCount)
         public TextView todayCountTV;
 
-        @Bind(R.id.circleDynamicLinear)
+        @BindView(R2.id.circleDynamicLinear)
         public LinearLayout circleDynamicLinear;
 
         public List<DynamicView> dynamicViewList;
@@ -264,7 +264,7 @@ public class CircleWithDynamicListAdapter extends RecyclerView.Adapter<CircleWit
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.rootView:
+                case R2.id.rootView:
                     mCircleTextViewHolderClicks.onItemView(v, getAdapterPosition());
                     return;
             }

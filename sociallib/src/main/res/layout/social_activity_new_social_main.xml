@@ -1,0 +1,193 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_behavior="com.jkyssocial.common.behavior.FlingBehavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:id="@+id/rel_pager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:fitsSystemWindows="true"
+                android:paddingTop="@dimen/default_toolbar_height">
+
+
+                <com.jkys.common.widget.AutoScrollViewPager
+                    android:id="@+id/new_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+
+                <LinearLayout
+                    android:id="@+id/new_dot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/new_banner"
+                    android:gravity="center_horizontal|right"
+                    android:orientation="horizontal"
+                    android:padding="5dp" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_toolbar_height"
+                android:background="@color/social_primary"
+                android:fitsSystemWindows="true"
+                app:contentInsetStart="10dp"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_toolbar_height">
+
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/common_navigation_btn_back_nor" />
+
+                    <TextView
+                        android:id="@+id/toolbarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="糖友说"
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
+
+                    <!--<LinearLayout-->
+                        <!--android:id="@+id/avatarArea"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginRight="10dp"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                            <!--android:id="@+id/my_avatar"-->
+                            <!--android:layout_width="28dp"-->
+                            <!--android:layout_height="28dp"-->
+                            <!--android:layout_gravity="center_vertical"-->
+                            <!--android:src="@drawable/social_new_avatar" />-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="4dp"-->
+                            <!--android:layout_height="10dp"-->
+                            <!--android:layout_gravity="center_vertical"-->
+                            <!--android:layout_marginLeft="3dp"-->
+                            <!--android:src="@drawable/social_icon_three_vertical_dot" />-->
+
+                    <!--</LinearLayout>-->
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/attach_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bg_page"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:id="@+id/tab_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <TextView
+                    android:id="@+id/recommend_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="热门"
+                    android:textColor="@drawable/tab_social_home_selector_tv"
+                    />
+                <TextView
+                    android:id="@+id/latest_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="最新"
+                    android:textColor="@drawable/tab_social_home_selector_tv"/>
+                <RelativeLayout
+                    android:id="@+id/topic_rl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/topic_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="话题"
+                        android:textColor="@drawable/tab_social_home_selector_tv"
+                        android:drawableRight="@drawable/little_triangle"
+                        android:drawablePadding="5dp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E6E6E6" />
+
+        <com.jkyssocial.common.NonSwipeableViewPager
+            android:id="@+id/new_personal_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/new_publish_dynamic"
+        android:scaleType="center"
+        app:backgroundTint="@color/social_primary"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/attach_view"
+        app:layout_anchorGravity="bottom|right"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#a6a6a6" />
+
+</android.support.design.widget.CoordinatorLayout>

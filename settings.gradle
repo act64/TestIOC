@@ -1,1 +1,1 @@
-include ':app', ':sociallib', ':jkysactivitybase'
+include ':app', ':sociallib', ':jkysactivitybase', ':copyhelp'

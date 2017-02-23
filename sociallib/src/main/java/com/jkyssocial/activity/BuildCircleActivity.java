@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -13,11 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jkys.common.widget.CustomToolbar;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
 import com.jkyssocial.common.network.UpLoadCircleAvatarAsyncTask;
-import com.jkyssocial.common.util.ZernToast;
 import com.jkyssocial.data.CircleResult;
 import com.jkyssocial.event.ChangeUserInfoEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -27,16 +29,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-import org.jsoup.helper.StringUtil;
-
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 public class BuildCircleActivity extends BaseActivity implements View.OnClickListener, UpLoadCircleAvatarAsyncTask.UploadCircleAvatarListener {
@@ -56,7 +55,7 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
     private String circleClassCode;
     private File tempFile;
 
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
 
     private int circleNum = 0;
@@ -123,12 +122,12 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         finish();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void onRightRLClick(View view) {
         // TODO 将新建的圈子的信息上传至服务器 进行审核
         // 先判断圈子的头像和名字和类型是否是空的
@@ -233,19 +232,19 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
         int requestcode = 0;
         switch (id) {
             // 头像设置
-            case R.id.build_circle_avatar_more:
+            case R2.id.build_circle_avatar_more:
                 intent.setClass(this, PhotoSelectedThumbnailActivity.class);
                 intent.putExtra("maxImageSelectCount", 1);
                 requestcode = RequestCodeToAvatar;
                 break;
-            case R.id.relativeLayout_avatar:
+            case R2.id.relativeLayout_avatar:
                 intent.setClass(this, PhotoSelectedThumbnailActivity.class);
                 intent.putExtra("maxImageSelectCount", 1);
                 requestcode = RequestCodeToAvatar;
                 break;
 
             // 圈子的名字设置
-            case R.id.build_circle_name_more:
+            case R2.id.build_circle_name_more:
                 intent.setClass(this, EditNameCircleActivity.class);
                 String textStr = build_circle_name.getText().toString();
                 if (textStr != null) {
@@ -253,7 +252,7 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
                 }
                 requestcode = RequestCodeToName;
                 break;
-            case R.id.relativeLayout_name:
+            case R2.id.relativeLayout_name:
                 intent.setClass(this, EditNameCircleActivity.class);
                 String textStr1 = build_circle_name.getText().toString();
                 if (textStr1 != null) {
@@ -263,19 +262,19 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             // 圈子的类型设置
-            case R.id.build_circle_type_more:
+            case R2.id.build_circle_type_more:
                 intent.setClass(this, ChooseTypeActivity.class);
                 intent.putExtra("CircleType", CircleType);
                 requestcode = RequestCodeToType;
                 break;
-            case R.id.relativeLayout_type:
+            case R2.id.relativeLayout_type:
                 intent.setClass(this, ChooseTypeActivity.class);
                 intent.putExtra("CircleType", CircleType);
                 requestcode = RequestCodeToType;
                 break;
 
             // 圈子的描述设置
-            case R.id.build_circle_descript_more:
+            case R2.id.build_circle_descript_more:
                 intent.setClass(this, EditDescriptCircleActivity.class);
                 String desStr = build_circle_descript.getText().toString();
                 if (desStr != null) {
@@ -285,7 +284,7 @@ public class BuildCircleActivity extends BaseActivity implements View.OnClickLis
                 requestcode = RequestCodeToDescript;
                 break;
 
-            case R.id.relativeLayout_descript:
+            case R2.id.relativeLayout_descript:
                 intent.setClass(this, EditDescriptCircleActivity.class);
                 String desStr1 = build_circle_descript.getText().toString();
                 if (desStr1 != null) {

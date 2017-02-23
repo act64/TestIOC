@@ -20,11 +20,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jkys.jkysbase.TimeUtil;
 import com.jkys.jkysbase.data.NetWorkResult;
+import com.jkys.proxy.AppImpl;
+import com.jkys.proxy.MyInfoUtilProxy;
+import com.jkys.proxy.ProxyClassFactory;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
 import com.jkyssocial.common.manager.RequestManager;
-import com.jkys.jkysbase.TimeUtil;
 import com.jkyssocial.data.Buddy;
 import com.jkyssocial.data.GetUserInfoResult;
 import com.jkyssocial.event.ChangSocialMessageEvent;
@@ -34,22 +39,15 @@ import com.jkyssocial.listener.EndlessRecyclerOnScrollListener;
 import com.jkyssocial.pageradapter.MySpacePagerAdapter;
 import com.jkyssocial.pageradapter.MySpacePagerOtherBuddyAdapter;
 import com.mintcode.area_patient.area_mine.MyInfoPOJO;
-import com.mintcode.area_patient.area_mine.MyInfoUtil;
 import com.mintcode.area_patient.entity.MyInfo;
 import com.mintcode.base.BaseActivity;
-import com.mintcode.util.DensityUtils;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
-
-import org.jsoup.helper.StringUtil;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -65,63 +63,63 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
 
     public static final int REQUEST_OHTER_INFO = 3;
 
-    @Bind(R.id.back)
+    @BindView(R2.id.back)
     View back;
-    @Bind(R.id.toolbarTitle)
+    @BindView(R2.id.toolbarTitle)
     TextView toolbarTitle;
-    @Bind(R.id.appBarLayout)
+    @BindView(R2.id.appBarLayout)
     AppBarLayout appBarLayout;
-    //    @Bind(R.id.recyclerView)
+    //    @BindView(R2.id.recyclerView)
 //    RecyclerView recyclerView;
-//    @Bind(R.id.swipeRefreshLayout)
+//    @BindView(R2.id.swipeRefreshLayout)
 //    SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.avatar)
+    @BindView(R2.id.avatar)
     ImageView avatar;
-    @Bind(R.id.vFlag)
+    @BindView(R2.id.vFlag)
     ImageView vFlag;
-    @Bind(R.id.userName)
+    @BindView(R2.id.userName)
     TextView userName;
-    @Bind(R.id.first_attr)
+    @BindView(R2.id.first_attr)
     TextView firstAttr;
-    @Bind(R.id.signature)
+    @BindView(R2.id.signature)
     TextView signature;
-    @Bind(R.id.attentionBtn)
+    @BindView(R2.id.attentionBtn)
     FancyButton attentionBtn;
-    @Bind(R.id.personalSpaceHeader)
+    @BindView(R2.id.personalSpaceHeader)
     RelativeLayout personalSpaceHeader;
-    @Bind(R.id.backgroundImage)
+    @BindView(R2.id.backgroundImage)
     ImageView personalSpaceHeaderBG;
-    @Bind(R.id.attention)
+    @BindView(R2.id.attention)
     TextView attention;
-    @Bind(R.id.beAttention)
+    @BindView(R2.id.beAttention)
     TextView beAttention;
-    @Bind(R.id.circle)
+    @BindView(R2.id.circle)
     TextView circle;
-    @Bind(R.id.message)
+    @BindView(R2.id.message)
     TextView message;
-    @Bind(R.id.messageArea)
+    @BindView(R2.id.messageArea)
     View messageArea;
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.collapsingToolbar)
+    @BindView(R2.id.collapsingToolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.main_content)
+    @BindView(R2.id.main_content)
     CoordinatorLayout mainContent;
-    @Bind(R.id.publishDynamic)
+    @BindView(R2.id.publishDynamic)
     ImageView publishDynamic;
-    //    @Bind(R.id.scrollToTop)
+    //    @BindView(R2.id.scrollToTop)
 //    ImageView scrollToTop;
-    @Bind(R.id.unreadNum)
+    @BindView(R2.id.unreadNum)
     FancyButton unreadNum;
-    @Bind(R.id.guidance)
+    @BindView(R2.id.guidance)
     ViewStub guidance;
-    //    @Bind(R.id.tv_bg_message)
+    //    @BindView(R2.id.tv_bg_message)
 //    TextView emptyMessage;
-    @Bind(R.id.new_personal_viewPager)
+    @BindView(R2.id.new_personal_viewPager)
     ViewPager viewPager;
-    @Bind(R.id.new_personal_tablayout)
+    @BindView(R2.id.new_personal_tablayout)
     TabLayout tabLayout;
-    @Bind(R.id.tab_frameLayout)
+    @BindView(R2.id.tab_frameLayout)
     FrameLayout tabFrameLayout;
 
 //    PersonalSpaceDynamicListAdapter dynamicListAdapter;
@@ -185,7 +183,7 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
                 activity.initMyBuddyHeaderView();
                 // 我的那边信息是每次resume中获取到本地缓存的图片地址。我在这边存储上传的头像。
                 String avatarUrl = activity.myBuddy.getImgUrl();
-                MyInfoUtil infoUtil = new MyInfoUtil();
+                MyInfoUtilProxy infoUtil = (MyInfoUtilProxy) ProxyClassFactory.getProxyClass(AppImpl.getAppRroxy().getMyInfoProxyClazz());
                 MyInfoPOJO infoPOJO = infoUtil.getMyInfo();
                 MyInfo myInfo;
                 if (infoPOJO != null) {
@@ -224,22 +222,22 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
         }
     }
 
-    @OnClick(R.id.back)
+    @OnClick(R2.id.back)
     void back(View view) {
         finish();
     }
 
-    @OnClick(R.id.publishDynamic)
+    @OnClick(R2.id.publishDynamic)
     void publishDynamic(View view) {
         startActivity(new Intent(NewPersonalSpaceActivity.this, PublishDynamicActivity.class));
     }
 
-    @OnClick(R.id.message)
+    @OnClick(R2.id.message)
     public void messageOnClick(View view) {
         startActivity(new Intent(NewPersonalSpaceActivity.this, MessageCenterActivity.class));
     }
 
-    @OnClick(R.id.circle)
+    @OnClick(R2.id.circle)
     public void circleOnClick(View view) {
         Intent intent = new Intent(NewPersonalSpaceActivity.this, MyEnterCircleOldActivity.class);
         if (otherBuddy == null || myBuddy.getBuddyId().equals(otherBuddy.getBuddyId())) {
@@ -250,18 +248,18 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
         startActivity(intent);
     }
 
-    @OnClick(R.id.attentionBtn)
+    @OnClick(R2.id.attentionBtn)
     public void attentionBtnOnClick(View view) {
         if (otherBuddy.getIdolFlag() == 1) {
-            LogUtil.addLog(getApplicationContext(), "event-forum-cancel-concern");
+            AppImpl.getAppRroxy().addLog(getApplicationContext(), "event-forum-cancel-concern");
             ApiManager.followUser(new FollowUserResquestListener(this, 0), 1, getApplicationContext(), otherBuddy.getBuddyId(), 0);
         } else {
-            LogUtil.addLog(getApplicationContext(), "event-forum-concern");
+            AppImpl.getAppRroxy().addLog(getApplicationContext(), "event-forum-concern");
             ApiManager.followUser(new FollowUserResquestListener(this, 1), 1, getApplicationContext(), otherBuddy.getBuddyId(), 1);
         }
     }
 
-    @OnClick(R.id.attention)
+    @OnClick(R2.id.attention)
     public void attentionOnClick(View view) {
         Intent intent = new Intent(NewPersonalSpaceActivity.this, ListAttentionActivity.class);
         if (otherBuddy == null || myBuddy.getBuddyId().equals(otherBuddy.getBuddyId())) {
@@ -272,7 +270,7 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
         startActivity(intent);
     }
 
-    @OnClick(R.id.beAttention)
+    @OnClick(R2.id.beAttention)
     public void beAttentionOnClick(View view) {
         Intent intent = new Intent(NewPersonalSpaceActivity.this, ListBeAttentionActivity.class);
         if (otherBuddy == null || myBuddy.getBuddyId().equals(otherBuddy.getBuddyId())) {
@@ -283,7 +281,7 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
         startActivity(intent);
     }
 
-    @OnClick(R.id.avatar)
+    @OnClick(R2.id.avatar)
     public void avatarOnClick(View view) {
         if (otherBuddy == null || myBuddy.getBuddyId().equals(otherBuddy.getBuddyId())) {
             Intent intent = new Intent(NewPersonalSpaceActivity.this, EditPersonalSpaceActivity.class);
@@ -316,7 +314,7 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
                     guidanceLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            imageView.setPadding(DensityUtils.dipTopx(getApplicationContext(), 55), 0, 0, 0);
+                            imageView.setPadding(dp2px( 55), 0, 0, 0);
                             imageView.setImageResource(R.drawable.social_personal_space_gudiance_dynamic);
                             fancyButton.setVisibility(View.VISIBLE);
                         }
@@ -374,9 +372,9 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
 
 //        dynamicListAdapter.create();
         if (otherBuddy == null)
-            LogUtil.addLog(this, "page-forum-myspace-" + myBuddy.getBuddyId());
+            AppImpl.getAppRroxy().addLog(this, "page-forum-myspace-" + myBuddy.getBuddyId());
         else
-            LogUtil.addLog(this, "page-forum-myspace-" + otherBuddy.getBuddyId());
+            AppImpl.getAppRroxy().addLog(this, "page-forum-myspace-" + otherBuddy.getBuddyId());
 
         setViewPager();
     }
@@ -399,18 +397,18 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
 
     }
 
-//    @OnClick(R.id.scrollToTop)
+//   @OnClick(R2.id.scrollToTop)
 //    void onScrollToTop(View view){
 //        recyclerView.smoothScrollToPosition(0);
 //    }
 
     private void initMyBuddyHeaderView() {
         if (!TextUtils.isEmpty(myBuddy.getImgUrl())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + myBuddy.getImgUrl(), this, avatar,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + myBuddy.getImgUrl(), this, avatar,
                     ImageManager.avatarOptions);
         }
         if (!TextUtils.isEmpty(myBuddy.getBgImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + myBuddy.getBgImgUrl(),
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + myBuddy.getBgImgUrl(),
                     this, personalSpaceHeaderBG, R.drawable.social_personal_space_bg);
         } else {
             personalSpaceHeaderBG.setImageResource(R.drawable.social_personal_space_bg);
@@ -446,11 +444,11 @@ public class NewPersonalSpaceActivity extends BaseActivity implements AppBarLayo
         else
             attentionBtn.setVisibility(View.GONE);
         if (!TextUtils.isEmpty(otherBuddy.getImgUrl())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + otherBuddy.getImgUrl(), this,
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + otherBuddy.getImgUrl(), this,
                     avatar, ImageManager.avatarOptions);
         }
         if (!TextUtils.isEmpty(otherBuddy.getBgImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + otherBuddy.getBgImgUrl(),
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + otherBuddy.getBgImgUrl(),
                     this, personalSpaceHeaderBG, R.drawable.social_personal_space_bg);
         } else {
             personalSpaceHeaderBG.setImageResource(R.drawable.social_personal_space_bg);

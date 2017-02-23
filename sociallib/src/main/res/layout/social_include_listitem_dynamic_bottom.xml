@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom">
+
+    <LinearLayout
+        android:id="@+id/come"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="来自 "
+            android:textSize="12dp"
+            android:textColor="@color/text_999999"/>
+
+        <TextView
+            android:id="@+id/comeFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="糖尿病1型圈"
+            android:maxWidth="130dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="12dp"
+            android:textColor="@color/social_primary" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/topic_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="130dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="12dp"
+        android:textColor="@color/social_primary"/>
+
+    <TextView
+        android:id="@+id/zan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="12dp"
+        android:text="53"
+        android:drawableLeft="@drawable/zan"
+        android:drawablePadding="5dp"
+        android:textColor="@color/text_999999"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_toLeftOf="@id/zan"
+        android:text="253"
+        android:drawableLeft="@drawable/comment"
+        android:drawablePadding="5dp"
+        android:textColor="@color/text_999999"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/renqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/comment"
+        android:textColor="@color/text_999999"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

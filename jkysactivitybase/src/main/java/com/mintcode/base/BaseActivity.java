@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.jkys.data.BaseResult;
+import com.jkys.jkysactivitybase.R;
 import com.jkys.jkysim.chat.widget.CustomProgressDialog;
 import com.jkys.jkysim.database.KeyValueDBService;
 import com.jkys.jkysim.model.BasePOJO;
@@ -18,10 +19,6 @@ import com.mintcode.util.Const;
 import com.mintcode.util.Keys;
 import com.mintcode.util.Utils;
 
-
-import java.util.ArrayList;
-
-import cn.dreamplus.wentang.R;
 
 /**
  * Created by wuweixiang on 16/8/22.
@@ -71,7 +68,7 @@ public class BaseActivity extends BaseTopActivity implements OnResponseListener,
      * 这个个人建议可以放到登录相关的封装，放在这里不是很合适
      */
     public void guestLogin() {
-        //LogUtil.addLog(context, "event-guest-login");
+        //AppImpl.getAppRroxy().addLog(context, "event-guest-login");
         Const.setUidToGuest(context);
     }
 
@@ -200,7 +197,8 @@ public class BaseActivity extends BaseTopActivity implements OnResponseListener,
                 //游客不准进入的界面要检测是否是游客，若是提醒登录
                 if ("page-record".equals(url3)) {
 //                    if (checkUidForVisitor()) return;
-                    AppImpl.getAppRroxy().showLoginActivity(this)) return;
+                    AppImpl.getAppRroxy().showLoginActivity(this);
+                    return;
                 }
                AppImpl.getAppRroxy().startIntent(url3, BaseActivity.this, null);
             }

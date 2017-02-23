@@ -17,7 +17,6 @@ import com.mintcode.App;
 import com.mintcode.area_doctor.area_main.DoctorAPI;
 import com.mintcode.area_patient.AppAPI;
 import com.mintcode.area_patient.area_login.LoginAPI;
-import com.mintcode.area_patient.area_task.TaskAPI;
 import com.mintcode.database.SQLiteHelper;
 
 import java.text.SimpleDateFormat;

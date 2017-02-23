@@ -81,37 +81,37 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
     private static final int PERSONAL_TYPE = 0;
     private static final int CIRCLE_TYPE = 1;
 
-//    @Bind(R.id.back)
+//    @BindView(R2.id.back)
 //    ImageView back;
-//    @Bind(R.id.toolbarTitle)
+//    @BindView(R2.id.toolbarTitle)
 //    TextView toolbarTitle;
-//    @Bind(R.id.publishBtn)
+//    @BindView(R2.id.publishBtn)
 //    TextView publishBtn;
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
-    @Bind(R.id.title)
+    @BindView(R2.id.title)
     EditText title;
-    @Bind(R.id.content)
+    @BindView(R2.id.content)
     EditText content;
-    @Bind(R.id.gridView)
+    @BindView(R2.id.gridView)
     MyGridView gridView;
-    @Bind(R.id.switchImage)
+    @BindView(R2.id.switchImage)
     ImageView switchImage;
-    @Bind(R.id.view_pager)
+    @BindView(R2.id.view_pager)
     ViewPager viewPager;
-    @Bind(R.id.indicator)
+    @BindView(R2.id.indicator)
     CirclePageIndicator indicator;
-    @Bind(R.id.hideBox)
+    @BindView(R2.id.hideBox)
     TextView hideBox;
-    @Bind(R.id.messagebox)
+    @BindView(R2.id.messagebox)
     RelativeLayout messagebox;
-    @Bind(R.id.editLinear)
+    @BindView(R2.id.editLinear)
     LinearLayout editLinear;
-    @Bind(R.id.titleDivider)
+    @BindView(R2.id.titleDivider)
     View titleDivider;
-    @Bind(R.id.select_circle_name)
+    @BindView(R2.id.select_circle_name)
     TextView selectCircleNameTv;
-    @Bind(R.id.select_circle_rl)
+    @BindView(R2.id.select_circle_rl)
     RelativeLayout selectCircleRl;
 
     private int type = PERSONAL_TYPE;
@@ -196,7 +196,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
 
     };
 
-    @OnClick(R.id.left_rl)
+   @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         onBackPressed();
     }
@@ -241,7 +241,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
         exitEditDialog.show();
     }
 
-    @OnClick(R.id.right_rl)
+   @OnClick(R2.id.right_rl)
     void onPublishClick(View view) {
         // 判断是否是社区首页进来的 而且没有点击选择圈子或者我的空间。
         if (SocialMainFragment.from.equals(from) && !isClickDialogItem) {
@@ -284,9 +284,9 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
             return;
         }
         if (circle != null) {
-            LogUtil.addLog(PublishDynamicActivity.this, "event-forum-new-circletopic");
+            AppImpl.getAppRroxy().addLog(PublishDynamicActivity.this, "event-forum-new-circletopic");
         } else {
-            LogUtil.addLog(PublishDynamicActivity.this, "event-forum-new-topic");
+            AppImpl.getAppRroxy().addLog(PublishDynamicActivity.this, "event-forum-new-topic");
         }
         if (!isPublishing) {
             isPublishing = true;
@@ -331,7 +331,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
     private boolean isHasCircleData;
     private Object obj = new Object();
 
-    @OnClick(R.id.select_circle_rl)
+   @OnClick(R2.id.select_circle_rl)
     void onSelectCircleOnClick(View view) {
         // 第一次选择我的圈子 则去请求我的圈子,改成提前获取
 //        if (myBuddy != null && !isHasCircleData) {
@@ -485,7 +485,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher,
         CirclePageIndicator circlePageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         circlePageIndicator.setViewPager(pager);
         content.addTextChangedListener(this);
-        LogUtil.addLog(this, "page-forum-new-topic");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-new-topic");
 
         //提前获取圈子列表,防止卡顿
         if (myBuddy != null)

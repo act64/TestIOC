@@ -144,7 +144,7 @@ public class SeniorSugarFriendFragmentAdapter extends BaseAdapter implements Req
 
         // 资深糖友的头像
         if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(),
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(),
                     null, holder.avatar, R.drawable.social_new_avatar);
         } else {
             holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -199,7 +199,7 @@ public class SeniorSugarFriendFragmentAdapter extends BaseAdapter implements Req
         if (activityWR == null || activityWR.get() == null)
             return;
         Activity activity = activityWR.get();
-        if (MainSelector.isNeedNewMain())
+        if (AppImpl.getAppRroxy().isNeedNewMain() )
             return;
         Intent intent = new Intent(activity, NewPersonalSpaceActivity.class);
         Buddy buddy = datas.get(position);
@@ -252,7 +252,7 @@ public class SeniorSugarFriendFragmentAdapter extends BaseAdapter implements Req
                 ConfirmTipsDialog dialog = new ConfirmTipsDialog(activity, "确认取消吗？", new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        LogUtil.addLog(activity, "event-forum-cancel-concern");
+                        AppImpl.getAppRroxy().addLog(activity, "event-forum-cancel-concern");
                         ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
                             @Override
                             public void processResult(int requestCode, int resultCode, NetWorkResult data) {
@@ -277,7 +277,7 @@ public class SeniorSugarFriendFragmentAdapter extends BaseAdapter implements Req
                 dialog.show();
 
             } else {
-                LogUtil.addLog(activity, "event-forum-concern");
+                AppImpl.getAppRroxy().addLog(activity, "event-forum-concern");
                 ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
                     @Override
                     public void processResult(int requestCode, int resultCode, NetWorkResult data) {

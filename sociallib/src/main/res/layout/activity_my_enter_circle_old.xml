@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jkyssocial.activity.MyEnterCircleActivity">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:toolbar_title="我加入的圈子"
+        app:right_firstText="新建"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/old_swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <com.jkyssocial.widget.DragSortListView
+            android:id="@+id/activity_my_enter_circle_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="#E6E6E6"
+            android:cacheColorHint="#E6E6E6"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:divider="#E6E6E6"
+            android:dividerHeight="0.5dp"
+            android:footerDividersEnabled="false"
+            android:listSelector="#00000000"
+            android:scrollbars="none"
+            app:drag_enabled="true"
+            app:drag_start_mode="onLongPress"
+            app:float_alpha="0.6" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="还没有加入任何圈子哦"
+        android:textColor="#999999"
+        android:textSize="16sp"
+        android:visibility="gone" />
+</RelativeLayout>

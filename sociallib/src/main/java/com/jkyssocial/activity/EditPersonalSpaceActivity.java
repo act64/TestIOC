@@ -19,6 +19,12 @@ import android.widget.Toast;
 
 import com.jkys.jkysbase.data.NetWorkResult;
 import com.jkys.jkysim.database.KeyValueDBService;
+import com.jkys.proxy.AppImpl;
+import com.jkys.proxy.MyInfoUtilProxy;
+import com.jkys.proxy.ProxyClassFactory;
+import com.jkys.proxy.UpLoadWxAvaTarTaskProxy;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.RequestManager;
 import com.jkyssocial.common.network.UploadFileForPublishAsyncTask;
@@ -26,31 +32,22 @@ import com.jkyssocial.data.Buddy;
 import com.jkyssocial.event.ChangeUserInfoEvent;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mintcode.area_patient.area_mine.MyInfoPOJO;
-import com.mintcode.area_patient.area_mine.MyInfoUtil;
 import com.mintcode.area_patient.entity.MyInfo;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.BitmapUtil;
-import com.mintcode.util.DensityUtils;
 import com.mintcode.util.ImageManager;
 import com.mintcode.util.Keys;
 import com.mintcode.util.TakePhotoDialog;
-import com.mintcode.util.UpLoadWXAvatarTask;
-import com.mintcode.util.UploadAvatarUtil;
-import com.mintcode.widget.cropview.CropActivity;
 
 import net.steamcrafted.loadtoast.LoadToast;
-
-import org.jsoup.helper.StringUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,27 +71,27 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
 
     private MyInfo myInfo;
 
-    @Bind(R.id.title_toolbar)
+    @BindView(R2.id.title_toolbar)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.avatar)
+    @BindView(R2.id.avatar)
     CircleImageView avatar;
-    @Bind(R.id.bg)
+    @BindView(R2.id.bg)
     RoundedImageView bg;
-    @Bind(R.id.nickname)
+    @BindView(R2.id.nickname)
     TextView nicknameTV;
-    @Bind(R.id.signature)
+    @BindView(R2.id.signature)
     TextView signatureTV;
-    @Bind(R.id.main_content)
+    @BindView(R2.id.main_content)
     LinearLayout mainContent;
-    @Bind(R.id.rll_avatar)
+    @BindView(R2.id.rll_avatar)
     RelativeLayout rllAvatar;
-    @Bind(R.id.rll_spaceBg)
+    @BindView(R2.id.rll_spaceBg)
     RelativeLayout rllSpaceBg;
-    @Bind(R.id.rll_nickName)
+    @BindView(R2.id.rll_nickName)
     RelativeLayout rllNickName;
-    @Bind(R.id.rll_signature)
+    @BindView(R2.id.rll_signature)
     RelativeLayout rllSignature;
 
     Buddy buddy;
@@ -107,7 +104,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
     String bgUrl;
 
     LoadToast loadToast;
-    private MyInfoUtil infoUtil;
+    private MyInfoUtilProxy infoUtil;
     private TakePhotoDialog takePhoto = new TakePhotoDialog(this);
     ;
     public Bitmap photoBitmap;
@@ -167,10 +164,10 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         ButterKnife.bind(this);
         buddy = (Buddy) getIntent().getSerializableExtra("myBuddy");
         if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(), this, avatar, ImageManager.avatarOptions);
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(), this, avatar, ImageManager.avatarOptions);
         }
         if (!TextUtils.isEmpty(buddy.getBgImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getBgImgUrl(),
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getBgImgUrl(),
                     this, bg, R.drawable.social_personal_space_bg);
         } else {
             bg.setImageResource(R.drawable.social_personal_space_bg);
@@ -179,8 +176,8 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         nicknameTV.setText(buddy.getUserName());
         signatureTV.setText(buddy.getSignature());
         loadToast = new LoadToast(this).setProgressColor(ContextCompat.getColor(this, R.color.social_primary)).setBackgroundColor(ContextCompat.getColor(this, R.color.black_semi_transparent)).
-                setTextColor(ContextCompat.getColor(this, R.color.white)).setText("图片上传中...").setTranslationY(DensityUtils.dipTopx(this, 100));
-        infoUtil = new MyInfoUtil();
+                setTextColor(ContextCompat.getColor(this, R.color.white)).setText("图片上传中...").setTranslationY(dp2px(100));
+        infoUtil = (MyInfoUtilProxy) ProxyClassFactory.getProxyClass(AppImpl.getAppRroxy().getMyInfoProxyClazz());
         infoPOJO = infoUtil.getMyInfo();
         if (infoPOJO != null) {
             myInfo = infoPOJO.getMyinfo();
@@ -202,7 +199,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         }
 
         if (!TextUtils.isEmpty(myInfo.getAvatar()) && myInfo.getAvatar().startsWith("/avatar")) {
-            url = BuildConfig.STATIC_PIC_PATH + myInfo.getAvatar();
+            url =  AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + myInfo.getAvatar();
         } else if (!TextUtils.isEmpty(myInfo.getAvatar()) && myInfo.getAvatar().contains("http")) {
             url = myInfo.getAvatar();
             isWXUploadAvartar = true;
@@ -210,12 +207,12 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         handler = new MyHandler(this);
     }
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void back(View view) {
         finish();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void onConfirmClick(View view) {
         if (!TextUtils.isEmpty(signature))
             ApiManager.modifyMood(new ModifyUserInfoRequestListener(), 1, EditPersonalSpaceActivity.this, signature);
@@ -233,7 +230,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         finish();
     }
 
-    @OnClick(R.id.nickname)
+    @OnClick(R2.id.nickname)
     void onNicknameClick(View view) {
         Intent intent = new Intent(EditPersonalSpaceActivity.this, EditSignatureActivity.class);
         intent.putExtra("signature", buddy.getUserName());
@@ -241,7 +238,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         startActivityForResult(intent, EDIT_NICKNAME);
     }
 
-    @OnClick(R.id.rll_nickName)
+    @OnClick(R2.id.rll_nickName)
     void onRllNickNameClick(View view) {
         Intent intent = new Intent(EditPersonalSpaceActivity.this, EditSignatureActivity.class);
         intent.putExtra("signature", buddy.getUserName());
@@ -249,21 +246,21 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         startActivityForResult(intent, EDIT_NICKNAME);
     }
 
-    @OnClick(R.id.signature)
+    @OnClick(R2.id.signature)
     void onSignatureClick(View view) {
         Intent intent = new Intent(EditPersonalSpaceActivity.this, EditSignatureActivity.class);
         intent.putExtra("signature", buddy.getSignature());
         startActivityForResult(intent, EDIT_SIGNATURE);
     }
 
-    @OnClick(R.id.rll_signature)
+    @OnClick(R2.id.rll_signature)
     void onRllSignatureClick(View view) {
         Intent intent = new Intent(EditPersonalSpaceActivity.this, EditSignatureActivity.class);
         intent.putExtra("signature", buddy.getSignature());
         startActivityForResult(intent, EDIT_SIGNATURE);
     }
 
-    @OnClick(R.id.avatar)
+    @OnClick(R2.id.avatar)
     void onAvatarClick(View view) {
         if (buddy.getCertStatus() == 1) {
             Toast.makeText(EditPersonalSpaceActivity.this, "认证中无法修改头像", Toast.LENGTH_SHORT).show();
@@ -277,7 +274,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
 //        startActivityForResult(intent, PHOTO_SELECTED_THUMBNAIL_ACTIVITY);
     }
 
-    @OnClick(R.id.rll_avatar)
+    @OnClick(R2.id.rll_avatar)
     void onRllAvatarClick(View view) {
         if (buddy.getCertStatus() == 1) {
             Toast.makeText(EditPersonalSpaceActivity.this, "认证中无法修改头像", Toast.LENGTH_SHORT).show();
@@ -291,7 +288,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
 //        startActivityForResult(intent, PHOTO_SELECTED_THUMBNAIL_ACTIVITY);
     }
 
-    @OnClick(R.id.bg)
+    @OnClick(R2.id.bg)
     void onBgClick(View view) {
         if (buddy.getCertStatus() == 1) {
             Toast.makeText(EditPersonalSpaceActivity.this, "认证中无法修改背景", Toast.LENGTH_SHORT).show();
@@ -305,7 +302,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         startActivityForResult(intent, PHOTO_SELECTED_THUMBNAIL_ACTIVITY);
     }
 
-    @OnClick(R.id.rll_spaceBg)
+    @OnClick(R2.id.rll_spaceBg)
     void onRllBgClick(View view) {
         if (buddy.getCertStatus() == 1) {
             Toast.makeText(EditPersonalSpaceActivity.this, "认证中无法修改背景", Toast.LENGTH_SHORT).show();
@@ -391,17 +388,27 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
                 }
                 break;
             case TakePhotoDialog.PHOTO_CODE:
-                Intent intentPhoto = new Intent(this, CropActivity.class);
-                intentPhoto.putExtra("bitmap", TakePhotoDialog.mPhotoPath);
-                startActivityForResult(intentPhoto, TakePhotoDialog.CROP_CODE);
+                Intent intentPhoto = null;
+                try {
+                    intentPhoto = new Intent(this, Class.forName("com.mintcode.widget.cropview.CropActivity"));
+                    intentPhoto.putExtra("bitmap", TakePhotoDialog.mPhotoPath);
+                    startActivityForResult(intentPhoto, TakePhotoDialog.CROP_CODE);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 break;
             case TakePhotoDialog.IMAG_CODE:
                 if (data != null) {
                     Uri uri = data.getData();
                     String path = BitmapUtil.uri2StringPath(context, uri);
-                    Intent intentImage = new Intent(this, CropActivity.class);
-                    intentImage.putExtra("bitmap", path);
-                    startActivityForResult(intentImage, TakePhotoDialog.CROP_CODE);
+                    try {
+                        Intent intentImage = new Intent(this, Class.forName("com.mintcode.widget.cropview.CropActivity"));
+                        intentImage.putExtra("bitmap", path);
+                        startActivityForResult(intentImage, TakePhotoDialog.CROP_CODE);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case TakePhotoDialog.CROP_CODE:
@@ -440,10 +447,11 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
         String headIconPath = BitmapUtil.saveBitmapAsJpeg(photoBitmap,
                 context);
         if (headIconPath != null) {
-            UploadAvatarUtil.uploadAvatar(context, handler, headIconPath);
+//            UploadAvatarUtil.uploadAvatar(context, handler, headIconPath);
+            AppImpl.getAppRroxy().uploadAvatar(context,handler,headIconPath);
             avatarUrl = headIconPath;
         } else if (isWXUploadAvartar) {
-            UpLoadWXAvatarTask upLoadWXAvatarTask = new UpLoadWXAvatarTask(context, url, handler);
+            UpLoadWxAvaTarTaskProxy upLoadWXAvatarTask = ProxyClassFactory.getProxyClass(AppImpl.getAppRroxy().getUpLoadWxAvaTarTaskProxy(),context, url, handler);
             upLoadWXAvatarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             handler.sendEmptyMessage(0);
@@ -484,7 +492,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
                     bg.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + bgUrl, null, bg);
+                            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + bgUrl, null, bg);
                         }
                     }, 3000);
                 }
@@ -496,7 +504,7 @@ public class EditPersonalSpaceActivity extends BaseActivity implements View.OnCl
                     avatar.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + avatarUrl, null, avatar);
+                            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + avatarUrl, null, avatar);
                         }
                     }, 3000);
                 }

@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.dreamplus.wentang.R;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 
 
 /**
@@ -96,7 +97,7 @@ public class EditSignatureActivity extends AppCompatActivity implements View.OnC
         };
         mEditText.addTextChangedListener(mTextWatcher);
 
-//        LogUtil.addLog(context, "page-change-record");
+//        AppImpl.getAppRroxy().addLog(context, "page-change-record");
 
     }
 
@@ -109,13 +110,13 @@ public class EditSignatureActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.right_rl:
+            case R2.id.right_rl:
                 Intent intent = new Intent();
                 intent.putExtra("signature", mEditText.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            case R.id.left_rl:
+            case R2.id.left_rl:
                 finish();
                 break;
         }

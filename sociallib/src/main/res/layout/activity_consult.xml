@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:right_firstText="咨询说明"
+        app:toolbar_title="咨询医生"/>
+
+    <TextView
+        android:id="@+id/nospare_tv"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        android:layout_below="@id/toolbar"
+        android:gravity="center_vertical"
+        android:paddingLeft="24px"
+        android:paddingRight="24px"
+        android:background="#ffdb8d"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:text="对不起，您的糖币不足，请您前往任务中心，去获取糖币吧"/>
+
+    <TextView
+        android:id="@+id/sub_title_consult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24px"
+        android:paddingRight="24px"
+        android:paddingTop="27px"
+        android:paddingBottom="16px"
+        android:layout_below="@id/nospare_tv"
+        android:textSize="13sp"
+        android:textColor="@color/text_666666"
+        android:text="只要写出问题，将有专业医生为您进行解答"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/mainArea"
+        android:background="@color/health_grayE6"
+        android:id="@+id/view" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/mainArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_below="@+id/sub_title_consult"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="88px"
+            android:background="@color/white"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="25px"
+            android:hint="您的问题是什么（例：血糖9.5应该怎么调整）"
+            android:inputType="textMultiLine"
+            android:maxLength="30"
+            android:textColor="@color/text_333333"
+            android:textColorHint="@color/text_999999"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/titleDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/health_grayE6" />
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="351px"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="start"
+            android:hint="请详细描述您的症状，问题和身体情况，便于医生更准确的分析。我们将确保您的隐私安全"
+            android:inputType="textMultiLine"
+            android:maxLength="2000"
+            android:paddingTop="28px"
+            android:paddingLeft="25px"
+            android:textColor="@color/text_333333"
+            android:textColorHint="@color/text_999999"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25px"
+            android:paddingRight="25px"
+            android:paddingBottom="31px">
+        <com.mintcode.widget.MyGridView
+            android:id="@+id/gridView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="10dp"
+            android:numColumns="5"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp"
+            android:visibility="gone"/>
+
+            <include
+                layout="@layout/ask_doctor_item"
+                android:id="@+id/ask_doctor_item_ly"></include>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/question_cosume_noticetv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11px"
+        android:textSize="12sp"
+        android:gravity="center"
+        tools:text="@string/take_consume_coin_notice"
+        android:textColor="@color/text_999999"
+        android:layout_below="@+id/ask_btn"/>
+
+    <Button
+        android:id="@+id/ask_btn"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        android:text="提问"
+        android:textColor="@color/white"
+        android:background="@drawable/gray_solid_retangle_bg"
+        android:layout_marginTop="15dp"
+        android:textSize="17sp"
+        android:layout_marginLeft="25px"
+        android:layout_marginRight="25px"
+        android:layout_below="@+id/view"
+        android:clickable="false"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

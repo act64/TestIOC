@@ -30,10 +30,10 @@ import com.jkys.jkysim.chat.emoji.MsgFaceUtils;
 import com.jkys.jkyswidget.ActionSheetDialog;
 import com.jkys.jkyswidget.ConfirmTipsDialog;
 import com.jkys.jkyswidget.MyListView;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
 import com.jkys.tools.DeviceUtil;
 import com.jkys.tools.ImageUtil;
-import com.jkys.tools.MainSelector;
-import com.jkys.tools.TaskRewardUtils;
 import com.jkysshop.model.ShareStatus;
 import com.jkyssocial.adapter.CommentListAdapter;
 import com.jkyssocial.common.manager.ApiManager;
@@ -50,24 +50,18 @@ import com.jkyssocial.data.Reply;
 import com.jkyssocial.event.DeleteDynamicEvent;
 import com.jkyssocial.pageradapter.MessageBoxPagerAdapter;
 import com.mintcode.area_patient.area_share.ShareUtil;
-import com.mintcode.area_patient.area_task.TaskAPI;
 import com.mintcode.area_patient.area_task.TaskRewardPOJO;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.sina.weibo.sdk.constant.WBConstants;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import org.jsoup.helper.StringUtil;
-
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 
@@ -222,7 +216,8 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                     activity.emptyView.setVisibility(View.GONE);
                 }
 //                TaskAPI.getInstance(activity.getApplicationContext()).getTaskReward(new TaskListener(activity, "每天第一次评论"), "article/reply");
-                TaskAPI.getInstance(activity).CallAPITaskReward(activity, "首次回复动态", "每日回复动态", "answer_post/first", "article/reply");
+//                TaskAPI.getInstance(activity).CallAPITaskReward(activity, "首次回复动态", "每日回复动态", "answer_post/first", "article/reply");
+                AppImpl.getAppRroxy().CallAPITaskReward(activity, "首次回复动态", "每日回复动态", "answer_post/first", "article/reply");
             }
             activity.resetSendComment();
         }
@@ -248,7 +243,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                 activity.dynamic.incrCommentCount();
                 activity.commentCount.setText("评论 " + activity.dynamic.getCommentCount());
 //                TaskAPI.getInstance(activity.getApplicationContext()).getTaskReward(new TaskListener(activity, "每天第一次回复"), "article/reply");
-                TaskAPI.getInstance(activity).CallAPITaskReward(activity, "首次回复动态", "每日回复动态", "answer_post/first", "article/reply");
+                AppImpl.getAppRroxy().CallAPITaskReward(activity, "首次回复动态", "每日回复动态", "answer_post/first", "article/reply");
 //                                    commentTextView.setText(dynamic.getCommentCount() > 0 ? String.valueOf(dynamic.getCommentCount()) : "评论");
             }
             activity.resetSendComment();
@@ -406,10 +401,10 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                 openCommentLinear(null);
             }
         }
-        if (MainSelector.isNeedNewMain())
-            LogUtil.addLog(this, "page-forum-topic-detail-trump-" + dynamic.getDynamicId());
+        if (AppImpl.getAppRroxy().isNeedNewMain() )
+            AppImpl.getAppRroxy().addLog(this, "page-forum-topic-detail-trump-" + dynamic.getDynamicId());
         else
-            LogUtil.addLog(this, "page-forum-topic-detail-" + dynamic.getDynamicId());
+            AppImpl.getAppRroxy().addLog(this, "page-forum-topic-detail-" + dynamic.getDynamicId());
         EventBus.getDefault().register(this);
     }
 
@@ -430,9 +425,9 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
     public void onPause() {
         super.onPause();
         commitZanChanged();
-        if (MainSelector.isNeedNewMain()) {
+        if (AppImpl.getAppRroxy().isNeedNewMain() ) {
             endTime = System.currentTimeMillis();
-            LogUtil.addLog(this, "page-forum-topic-detail-trump-" + dynamic.getDynamicId() + "-" + (startTime - endTime));
+            AppImpl.getAppRroxy().addLog(this, "page-forum-topic-detail-trump-" + dynamic.getDynamicId() + "-" + (startTime - endTime));
         }
     }
 
@@ -476,8 +471,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                 .findViewById(R.id.content);
 
         footView = view.findViewById(R.id.footer);
-
-        if (dynamic.getCircle() != null && !MainSelector.isNeedNewMain()) {
+        if (dynamic.getCircle() != null && !AppImpl.getAppRroxy().isNeedNewMain() ) {
             TextView comeFrom = (TextView) footView
                     .findViewById(R.id.comeFrom);
             comeFrom.setText(dynamic.getCircle().getTitle());
@@ -511,7 +505,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
         updateLikerList();
         if (dynamic.getOwner() != null) {
             if (!TextUtils.isEmpty(dynamic.getOwner().getImgUrl())) {
-                ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + dynamic.getOwner().getImgUrl(), null,
+                ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + dynamic.getOwner().getImgUrl(), null,
                         avatar, R.drawable.social_new_avatar);
             } else {
                 avatar.setImageResource(R.drawable.social_new_avatar);
@@ -592,7 +586,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
         }
         String url = dynamic.getImages().get(0);
         if (!TextUtils.isEmpty(url)) {
-            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + ImageUtil.getSmallImageUrl(url), null, imageView);
+            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + ImageUtil.getSmallImageUrl(url), null, imageView);
         }
 
         imageView.setTag(R.id.tag_first, dynamic.getImages());
@@ -628,7 +622,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                 imageView.setTag(R.id.tag_second, index);
                 imageView.setTag(R.id.tag_first, dynamic.getImages());
                 if (!TextUtils.isEmpty(picUrls.get(index))) {
-                    ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + picUrls.get(index), null, imageView);
+                    ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + picUrls.get(index), null, imageView);
                 }
                 index++;
 
@@ -670,7 +664,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                         imageView.setTag(R.id.tag_second, index);
                         imageView.setOnClickListener(onImageClickListener);
                         if (!TextUtils.isEmpty(ImageUtil.getSmallImageUrl(picUrls.get(index)))) {
-                            ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH +
+                            ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() +
                                     ImageUtil.getSmallImageUrl(picUrls.get(index)), null, imageView);
                         }
                         index++;
@@ -687,7 +681,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                             imageView.setOnClickListener(onImageClickListener);
                             String picUrl = picUrls.get(index++);
                             if (!TextUtils.isEmpty(picUrl)) {
-                                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH
+                                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                         + ImageUtil.getSmallImageUrl(picUrl), null, imageView);
                             }
                             imageView.setVisibility(View.VISIBLE);
@@ -764,7 +758,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
     public void onResponse(BaseResponse baseResponse) {
         switch (baseResponse.errCode) {
             case WBConstants.ErrorCode.ERR_OK:
-                LogUtil.addLog(this, "event-topic-share-" + dynamic.getDynamicId() + "-新浪微博");
+                AppImpl.getAppRroxy().addLog(this, "event-topic-share-" + dynamic.getDynamicId() + "-新浪微博");
                 Toast.makeText(this, "微博分享成功", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -783,7 +777,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
 
         @Override
         public void onClick(View v) {
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             Intent intent = new Intent(DynamicDetailActivity.this, NewPersonalSpaceActivity.class);
             intent.putExtra("otherBuddy", buddy);
@@ -802,7 +796,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
         public void onClick(View v) {
             zanChanged = !zanChanged;
             if (dynamic.getLikeFlag() == 1) {
-                LogUtil.addLog(DynamicDetailActivity.this, "event-forum-cancel-praise");
+                AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-cancel-praise");
                 dynamic.setLikeFlag(0);
 //                List<Buddy> li = dynamic.getLikerList();
 //                if (li == null) return;
@@ -819,7 +813,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                 zanTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.social_zan_new), null, null, null);
             } else {
 //                mFavorLayout.addFavor();
-                LogUtil.addLog(DynamicDetailActivity.this, "event-forum-praise");
+                AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-praise");
 //                zanTextView.setText(String.valueOf(dynamic.incrLikeCount()));
                 zanTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.social_zan_new_selected), null, null, null);
                 dynamic.setLikeFlag(1);
@@ -908,7 +902,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                     if (!TextUtils.isEmpty(content)) {
                         ApiManager.addComment(new AddCommentRequestListener(DynamicDetailActivity.this), ADD_COMMENT, DynamicDetailActivity.this, dynamic.getDynamicId(),
                                 content);
-                        LogUtil.addLog(DynamicDetailActivity.this, "event-forum-new-comment");
+                        AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-new-comment");
                     }
                 } else {
                     String content = editText.getText().toString();
@@ -916,7 +910,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                         ApiManager.addReply(new AddReplyRequestListener(DynamicDetailActivity.this), ADD_COMMENT, DynamicDetailActivity.this, dynamic.getDynamicId(),
                                 param.commentId, param.targetBuddyId, content);
                         v.setTag(null);
-                        LogUtil.addLog(DynamicDetailActivity.this, "event-forum-new-reply");
+                        AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-new-reply");
                     }
                 }
             }
@@ -1060,16 +1054,16 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
             findViewById(R.id.share).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // LogUtil.addLog(DynamicDetailActivity.this, "event-topic-share-" + dynamic.getDynamicId());
-                    String url = BuildConfig.H5_PATH + "events/dynamicDetail/index2.html?dynamicId=" + dynamic.getDynamicId();
+                    // AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-topic-share-" + dynamic.getDynamicId());
+                    String url = AppImpl.getAppRroxy().getH5_PATH() + "events/dynamicDetail/index2.html?dynamicId=" + dynamic.getDynamicId();
                     String content = null;
                     if (dynamic.getContent() != null)
                         content = dynamic.getContent().length() < 100 ? dynamic.getContent() : dynamic.getContent().substring(0, 97) + "...";
 //                    Bitmap bitmap = null;
                     String imgUrl = null;
                     if (dynamic.getImages() != null && dynamic.getImages().size() > 0) {
-//                        bitmap = ImageManager.getBitmap(BuildConfig.STATIC_PIC_PATH + ImageUtil.getSmallImageUrl(dynamic.getImages().get(0)), new ImageSize(50, 50));
-                        imgUrl = BuildConfig.STATIC_PIC_PATH + ImageUtil.getSmallImageUrl(dynamic.getImages().get(0));
+//                        bitmap = ImageManager.getBitmap( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + ImageUtil.getSmallImageUrl(dynamic.getImages().get(0)), new ImageSize(50, 50));
+                        imgUrl =  AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + ImageUtil.getSmallImageUrl(dynamic.getImages().get(0));
                     }
                     shareUtil = new ShareUtil(DynamicDetailActivity.this, url, "糖友圈好文推荐", content, imgUrl);
                     shareUtil.setMaiDianCanSu("event-topic-share-" + dynamic.getDynamicId() + "-");
@@ -1157,19 +1151,19 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
                         @Override
                         public void onClick(View v) {
                             if (TextUtils.isEmpty(commentId) && TextUtils.isEmpty(replyId)) {
-                                LogUtil.addLog(DynamicDetailActivity.this, "event-forum-delete-topic");
+                                AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-delete-topic");
                                 ApiManager.removeDynamic(new RemoveDynamicRequestListener(DynamicDetailActivity.this), 1, DynamicDetailActivity.this, dynamicId);
 //                                resultData.putExtra("delDynamicId", dynamicId);
 //                                setResult(RESULT_OK, resultData);
                                 finish();
                             } else if (TextUtils.isEmpty(replyId)) {
-                                LogUtil.addLog(DynamicDetailActivity.this, "event-forum-delete-comment");
+                                AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-delete-comment");
                                 ApiManager.removeComment(new NetWorkResultRequestListener(DynamicDetailActivity.this), 1, DynamicDetailActivity.this, dynamicId, commentId);
                                 dynamic.decrCommentCount();
                                 commentCount.setText("评论 " + dynamic.getCommentCount());
                                 mAdapter.removeItem(commentId);
                             } else {
-                                LogUtil.addLog(DynamicDetailActivity.this, "event-forum-delete-reply");
+                                AppImpl.getAppRroxy().addLog(DynamicDetailActivity.this, "event-forum-delete-reply");
                                 ApiManager.removeReply(new NetWorkResultRequestListener(DynamicDetailActivity.this), 1, DynamicDetailActivity.this, dynamicId, commentId, replyId);
                                 mAdapter.removeReply(commentId, replyId);
                             }
@@ -1187,7 +1181,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
     class GoPersonalSpaceListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            if (null != v.getTag() && !MainSelector.isNeedNewMain()) {
+            if (null != v.getTag() && !AppImpl.getAppRroxy().isNeedNewMain() ) {
                 Intent intent = new Intent(DynamicDetailActivity.this, NewPersonalSpaceActivity.class);
                 intent.putExtra("otherBuddy", (Buddy) v.getTag());
                 startActivity(intent);
@@ -1198,11 +1192,13 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
     @Override
     public void onResponse(Object response, String taskId, boolean rawData) {
         super.onResponse(response, taskId, rawData);
-        if (TaskAPI.TASKID.GET_REWARD.equals(taskId)) {
+        if (AppImpl.getAppRroxy().getTASKD_GET_REWARD().equals(taskId)) {
             if (response instanceof TaskRewardPOJO) {
                 TaskRewardPOJO pojo = (TaskRewardPOJO) response;
                 if (pojo.getCode() == 2000 && pojo.getCoin() > 0) {
-                    TaskRewardUtils.handleTask(this, pojo, "article/reply");
+
+//                    TaskRewardUtils.handleTask(this, pojo, "article/reply");
+                    AppImpl.getAppRroxy().handleTask(this, pojo, "article/reply");
                 }
 
             }
@@ -1215,7 +1211,7 @@ public class DynamicDetailActivity extends BaseActivity implements CommentListAd
         int status = event.getStatus();
         switch (status) {
             case ShareStatus.ShareSuccess:
-                TaskAPI.getInstance(this).CallAPITaskReward(this, "首次分享动态", "每日分享动态", "share_post/first", "share_post/daily");
+                AppImpl.getAppRroxy().CallAPITaskReward(this, "首次分享动态", "每日分享动态", "share_post/first", "share_post/daily");
                 break;
         }
     }

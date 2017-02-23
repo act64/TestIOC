@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jkys.common.widget.CustomToolbar;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkyssocial.Fragment.AllCircleTypeFragment;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
@@ -25,17 +27,14 @@ import com.jkyssocial.data.Buddy;
 import com.jkyssocial.data.CircleClass;
 import com.jkyssocial.data.CircleClassListResult;
 import com.mintcode.base.BaseActivity;
-import com.mintcode.util.DensityUtils;
-import com.mintcode.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.dreamplus.wentang.R;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AllCircleActivity extends BaseActivity implements View.OnClickListener {
@@ -45,7 +44,8 @@ public class AllCircleActivity extends BaseActivity implements View.OnClickListe
     //    private List<AllCircleTypeFragment> fragments;
     private CommonFragmentPagerAdapter adapter;
 //    private TextView activity_all_circle_back, activity_all_circle_buildcircle;
-    @Bind(R.id.toolbar)
+
+    @BindView(R2.id.toolbar)
     CustomToolbar toolbar;
 
     /**
@@ -98,14 +98,14 @@ public class AllCircleActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_circle);
-        ButterKnife.bind(this);
+         ButterKnife.bind(this);
         if (CommonInfoManager.showGuidance(this, getClass().getName())) {
             ViewStub guidance = (ViewStub) findViewById(R.id.guidance);
             final RelativeLayout guidanceLayout = (RelativeLayout) guidance.inflate();
             final ImageView imageView = (ImageView) guidanceLayout.findViewById(R.id.image_shower);
             final FancyButton fancyButton = (FancyButton) guidanceLayout.findViewById(R.id.i_know);
             fancyButton.setVisibility(View.VISIBLE);
-            imageView.setPadding(DensityUtils.dipTopx(this, 35), DensityUtils.dipTopx(this, 15), 0, 0);
+            imageView.setPadding(dp2px(35), dp2px(15), 0, 0);
             imageView.setImageResource(R.drawable.social_all_circle_guidance_create);
             guidanceLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,7 +122,7 @@ public class AllCircleActivity extends BaseActivity implements View.OnClickListe
         initView();
         initData();
         initEvent();
-        LogUtil.addLog(this, "page-forum-circle-list");
+        AppImpl.getAppRroxy().addLog(this, "page-forum-circle-list");
     }
 
     private void initEvent() {
@@ -170,13 +170,13 @@ public class AllCircleActivity extends BaseActivity implements View.OnClickListe
     // 用户建立的圈子的个数
     private int circleNum = 0;
 
-    @OnClick(R.id.left_rl)
+    @OnClick(R2.id.left_rl)
     void onBackClick(View view) {
         ZernToast.cancelToast();
         finish();
     }
 
-    @OnClick(R.id.right_rl)
+    @OnClick(R2.id.right_rl)
     void onRightRLClick(View view) {
         Intent intent = new Intent(this, BuildCircleActivity.class);
         if (circleNum < 3) {
@@ -191,11 +191,11 @@ public class AllCircleActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
 //        int id = v.getId();
 //        switch (id) {
-//            case R.id.left_rl:
+//            case R2.id.left_rl:
 //                ZernToast.cancelToast();
 //                finish();
 //                break;
-//            case R.id.activity_all_circle_buildcircle:
+//            case R2.id.activity_all_circle_buildcircle:
 //                Intent intent = new Intent(this, BuildCircleActivity.class);
 //                if (circleNum < 3) {
 //                    // 用户已经建立小于2个的时候不需要提示就跳转到新建界面

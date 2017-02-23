@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.jkyssocial.activity.CircleMemberActivity">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:toolbar_title="圈子成员"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/default_toolbar_height"-->
+        <!--android:background="#4991FD"-->
+        <!--android:padding="12dp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/acivity_circle_member_back"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:drawableLeft="@drawable/common_navigation_btn_back_nor" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/acivity_circle_member_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:text=""-->
+            <!--android:textColor="#fff"-->
+            <!--android:textSize="18sp" />-->
+    <!--</RelativeLayout>-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/acivity_circle_member_swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.jkys.jkyswidget.MyListView
+        android:id="@+id/acivity_circle_member_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:dividerHeight="0.5dp"
+        android:divider="#E6E6E6"
+        android:scrollbars="none"
+        android:footerDividersEnabled="false"
+        />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

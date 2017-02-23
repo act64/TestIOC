@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 
+import com.jkys.proxy.AppImpl;
 import com.jkyssocial.adapter.SugarFriendCirclesAdapter;
 import com.jkyssocial.common.manager.ApiManager;
 import com.jkyssocial.common.manager.CommonInfoManager;
@@ -21,14 +22,14 @@ import com.jkyssocial.data.ListBuddyResult;
 import com.jkyssocial.event.ChangSocialLatestDynamicEvent;
 import com.jkyssocial.pageradapter.SocialDynamicPagerAdapter;
 import com.mintcode.database.CasheDBService;
-import com.mintcode.util.LogUtil;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnPageChange;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
@@ -42,31 +43,31 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
     private static final int MESSAGE_READ = 1;
     private static final int LATEST_DYNAMIC_READ = 2;
 
-    @Bind(R.id.dynamicViewPager)
+    @BindView(R2.id.dynamicViewPager)
     ViewPager dynamicViewPager;
 
-//    @Bind(R.id.appBarLayout)
+//    @BindView(R2.id.appBarLayout)
 //    AppBarLayout appBarLayout;
 
-//    @Bind(R.id.collapsingToolbar)
+//    @BindView(R2.id.collapsingToolbar)
 //    CollapsingToolbarLayout collapsingToolbar;
 
-//    @Bind(R.id.tabLayout)
+//    @BindView(R2.id.tabLayout)
 //    TabLayout tabLayout;
 
-//    @Bind(R.id.social_main_mycircle)
+//    @BindView(R2.id.social_main_mycircle)
 //    TextView myCircle;
 
-//    @Bind(R.id.social_main_mycircle_icon)
+//    @BindView(R2.id.social_main_mycircle_icon)
 //    ImageView myCircleIcon;
 
-//    @Bind(R.id.social_main_gridView)
+//    @BindView(R2.id.social_main_gridView)
 //    UnScrollGridView mGridView;
 
-//    @Bind(R.id.headerLinear)
+//    @BindView(R2.id.headerLinear)
 //    LinearLayout headerLinear;
 
-//    @Bind(R.id.latestDynamicUnreadView)
+//    @BindView(R2.id.latestDynamicUnreadView)
 //    View latestDynamicUnreadView;
 
     SocialDynamicPagerAdapter pagerAdapter;
@@ -77,6 +78,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
 
     private CasheDBService casheDBService;
     private SugarFriendCirclesAdapter mGridadapter;
+    private Unbinder unbinder;
 
     public static SocialDynamicFragment newInstance() {
         SocialDynamicFragment socialCircleDynamicFragment = new SocialDynamicFragment();
@@ -122,7 +124,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
 //                    ImageView vFlag = (ImageView) view.findViewById(R.id.vFlag);
 //                    TextView userTitle = (TextView) view.findViewById(R.id.userTitle);
 //                    TextView userName = (TextView) view.findViewById(R.id.userName);
-//                    ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
+//                    ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy1.getImgUrl(), null, avatar, ImageManager.avatarOptions);
 //                    ImageManager.setVFlag(vFlag, buddy1);
 //                    userName.setText(buddy1.getUserName());
 //                    userTitle.setText(buddy1.getUserType() == 1 ? "专家医生" : "资深糖友");
@@ -131,7 +133,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
 //                        public void onClick(View v) {
 //                            if (showLoginDialog())
 //                                return;
-//                            LogUtil.addLog(getContext(), "event-forum-recommend-expert-" + buddy1.getBuddyId());
+//                            AppImpl.getAppRroxy().addLog(getContext(), "event-forum-recommend-expert-" + buddy1.getBuddyId());
 //                            Intent intent = new Intent(getContext(), NewPersonalSpaceActivity.class);
 //                            intent.putExtra("otherBuddy", buddy1);
 //                            startActivity(intent);
@@ -149,7 +151,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_fragment_social_dynamic, container, false);
-        ButterKnife.bind(this, view);
+        unbinder= ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
 //        String latestStr = CasheDBService.getInstance(getContext()).findValue(Keys.SOCIAL_LATEST_DYNAMIC);
 //        if (!TextUtils.isEmpty(latestStr)) {
@@ -176,7 +178,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
     @OnPageChange(value = R.id.dynamicViewPager, callback = OnPageChange.Callback.PAGE_SELECTED)
     void onPageSelected(int position) {
         if (position == 1) {
-            LogUtil.addLog(getContext(), "event-forum-recenttopic-tab");
+            AppImpl.getAppRroxy().addLog(getContext(), "event-forum-recenttopic-tab");
             EventBus.getDefault().post(new ChangSocialLatestDynamicEvent(-1));
 //            if (latestDynamicUnreadView.getVisibility() == View.VISIBLE) {
 //                latestDynamicUnreadView.setVisibility(View.GONE);
@@ -184,7 +186,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
         }
     }
 
-//    @OnClick(R.id.social_main_mycircle)
+//   @OnClick(R2.id.social_main_mycircle)
 //    void intentToMyEnterCircle(View view) {
 //        if (!ViewUtil.singleClick()) return;
 ////        if (myBuddy != null && myBuddy.getCircleCount() > 0) { // 因为点击我的圈子 如果我没有加入任何圈子是进不去的。
@@ -194,7 +196,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
 ////        }
 //    }
 
-//    @OnClick(R.id.findMoreSuperStar)
+//   @OnClick(R2.id.findMoreSuperStar)
 //    void onfindMoreSuperStarClick(View view) {
 //        if (showLoginDialog())
 //            return;
@@ -235,7 +237,7 @@ public class SocialDynamicFragment extends SocialBaseFragment implements Request
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

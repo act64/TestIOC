@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jkys.jkyswidget.FixedAspectRatioFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fixedaspectratio="http://schemas.android.com/apk/res-auto"
+    fixedaspectratio:aspectRatioWidth="1"
+    fixedaspectratio:aspectRatioHeight="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/social_add_photo"
+        android:scaleType="fitCenter"/>
+</com.jkys.jkyswidget.FixedAspectRatioFrameLayout>

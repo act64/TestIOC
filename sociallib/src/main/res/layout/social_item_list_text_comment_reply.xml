@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#E6E6E6"
+        android:layout_marginBottom="4dp"/>
+    <TextView
+        android:id="@+id/replyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#666666"
+        android:textColorHighlight="@color/transparent"
+        android:maxLength="220"
+        android:layout_marginTop="12dp"
+        android:lineSpacingMultiplier="1.2"
+        android:ellipsize="none"
+        tool:text="我的睡觉觉都阿斯顿"
+        android:focusable="false"
+        android:clickable="false"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/replyTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#999999"
+        tool:text="我的睡觉觉都阿斯顿"
+        android:layout_marginBottom="6dp"
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/replyContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_333333"
+        tool:text="我的睡觉觉都阿斯顿"
+        android:textColorHighlight="@color/transparent"
+        android:maxLength="220"
+        android:lineSpacingMultiplier="1.4"
+        android:ellipsize="none"
+        android:focusable="false"
+        android:clickable="false"
+        android:textSize="16sp" />
+</LinearLayout>

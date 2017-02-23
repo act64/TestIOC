@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="12dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/sortNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="14sp"
+        android:textColor="@color/text_666666"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
+        android:visibility="gone"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/item_allcircle_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/sortNum"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/item_allcircle_img"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/item_allcircle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="140dp"
+            android:singleLine="true"
+            android:text="糖尿病1型"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/item_allcircle_decribute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_allcircle_name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxWidth="200dp"
+            android:text="圈子描述"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/item_allcircle_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/item_allcircle_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_allcircle_name"
+            android:text="成员:5261"
+            android:textColor="@color/v2blue_zern"
+            android:textSize="12sp" />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/item_allcircle_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="6dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingRight="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            fancy:fb_borderColor="@color/social_primary"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/white"
+            fancy:fb_text="自建"
+            fancy:fb_textColor="@color/social_primary"
+            fancy:fb_textSize="12sp"
+            fancy:fb_radius="1dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_allcircle_enter"
+        android:layout_width="60dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_care"
+        android:button="@null"
+        android:gravity="center"
+        android:text="加入"
+        android:textColor="@color/selector_text_color"
+        android:textSize="12sp"/>
+    <ImageView
+        android:id="@+id/sortIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/social_sort_icon"
+        android:visibility="gone"/>
+
+</RelativeLayout>

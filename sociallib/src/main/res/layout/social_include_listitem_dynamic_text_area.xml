@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:lineSpacingMultiplier="1.3"
+        android:textColor="@color/text_333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="了大连市大哈拉少地阿娇掉价的立即按实力的骄傲实力的较量撒娇" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.5"
+        android:maxLines="3"
+        android:textColor="@color/text_999999"
+        android:textSize="14sp"
+        tools:text="了大连市大哈拉少地阿娇掉价的立即按实力的骄傲实力的较量撒娇" />
+
+</LinearLayout>

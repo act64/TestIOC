@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dynamicHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="2dp">
+
+    <include
+        android:id="@+id/avatarArea"
+        layout="@layout/social_new_avatar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/avatarArea"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="雷鸣大师"
+            android:maxLength="15"
+            android:ellipsize="end"
+            android:textColor="@color/text_333333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/createdTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="5分钟前"
+            android:textColor="@color/text_999999"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        >
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/circleOwnerTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="6dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingRight="6dp"
+            fancy:fb_defaultColor="@color/social_primary"
+            fancy:fb_text="圈主"
+            fancy:fb_textColor="@color/white"
+            fancy:fb_textSize="12sp"
+            fancy:fb_radius="1dp"
+            android:visibility="gone"/>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/circleRecommendTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:paddingLeft="6dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingRight="6dp"
+            fancy:fb_defaultColor="#73C51B"
+            fancy:fb_text="推荐"
+            fancy:fb_textColor="@color/white"
+            fancy:fb_textSize="12sp"
+            fancy:fb_radius="1dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/sendingBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="25dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/sendError"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/social_send_error"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/sendStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="发送失败"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

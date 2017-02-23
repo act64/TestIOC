@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jkys.jkyswidget.FixedAspectRatioFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fixedaspectratio="http://schemas.android.com/apk/res-auto"
+    fixedaspectratio:aspectRatioWidth="1"
+	fixedaspectratio:aspectRatioHeight="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout 
+        android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+	    <ImageView
+	        android:id="@+id/image"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+            android:src="@drawable/social_bg_select_image"
+	        android:background="#404040"
+	        android:scaleType="center"/>
+	    <CheckBox  
+	        android:id="@+id/select"  
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+			android:button="@null"
+			android:background="@drawable/checkbox_style"
+	        android:layout_alignParentTop="true"
+	        android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
+</com.jkys.jkyswidget.FixedAspectRatioFrameLayout>

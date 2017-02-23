@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jkys.sociallib.R2;
 import com.jkyssocial.adapter.NewRecommendDynamicListAdapter;
 import com.jkyssocial.event.ChangSocialLatestDynamicEvent;
 import com.jkyssocial.event.DeleteDynamicEvent;
@@ -17,8 +18,9 @@ import com.jkyssocial.listener.ListUIListener;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
@@ -27,10 +29,10 @@ import de.greenrobot.event.EventBus;
  */
 public class NewRecommendDynamicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     NewRecommendDynamicListAdapter dynamicListAdapter;
@@ -38,6 +40,7 @@ public class NewRecommendDynamicFragment extends Fragment implements SwipeRefres
     LinearLayoutManager linearLayoutManager;
 
     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
+    private Unbinder unbinder;
 
     static class ListUIListenerImpl implements ListUIListener {
         private WeakReference<NewRecommendDynamicFragment> fragmentWR;
@@ -84,7 +87,7 @@ public class NewRecommendDynamicFragment extends Fragment implements SwipeRefres
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.social_fragment_sugar_friend_dynamic, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=  ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -103,7 +106,7 @@ public class NewRecommendDynamicFragment extends Fragment implements SwipeRefres
         swipeRefreshLayout.setEnabled(false);
 
         dynamicListAdapter.create();
-//        LogUtil.addLog(getContext(), "page-forum-recent-topic");
+//        AppImpl.getAppRroxy().addLog(getContext(), "page-forum-recent-topic");
 
         return view;
     }
@@ -119,7 +122,7 @@ public class NewRecommendDynamicFragment extends Fragment implements SwipeRefres
         EventBus.getDefault().unregister(this);
         dynamicListAdapter = null;
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 //    public void onEventMainThread(ChangSocialLatestDynamicEvent event) {

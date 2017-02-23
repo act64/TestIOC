@@ -45,13 +45,13 @@ import de.greenrobot.event.EventBus;
  */
 public class MyDynamicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R2.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.tv_bg_message)
+    @BindView(R2.id.tv_bg_message)
     TextView emptyMessage;
-    @Bind(R.id.recyclerView)
+    @BindView(R2.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.scrollToTop)
+    @BindView(R2.id.scrollToTop)
     ImageView scrollToTop;
 
     Buddy otherBuddy;
@@ -191,7 +191,7 @@ public class MyDynamicFragment extends Fragment implements SwipeRefreshLayout.On
 
     }
 
-    @OnClick(R.id.scrollToTop)
+   @OnClick(R2.id.scrollToTop)
     void onScrollToTop(View view) {
         recyclerView.smoothScrollToPosition(0);
     }

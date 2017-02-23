@@ -139,7 +139,7 @@ public class ExperDoctorFragmentAdapter extends BaseAdapter implements AdapterVi
         holder.item_zjys_care.setOnClickListener(new AttentionClickListener());
         // 专家医生的头像
         if (!TextUtils.isEmpty(buddy.getImgUrl())) {
-            ImageManager.loadImageByDefaultImage(BuildConfig.STATIC_PIC_PATH + buddy.getImgUrl(), null,
+            ImageManager.loadImageByDefaultImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + buddy.getImgUrl(), null,
                     holder.avatar, R.drawable.social_new_avatar);
         } else {
             holder.avatar.setImageResource(R.drawable.social_new_avatar);
@@ -213,7 +213,7 @@ public class ExperDoctorFragmentAdapter extends BaseAdapter implements AdapterVi
         if (activityWR == null || activityWR.get() == null)
             return;
         Activity activity = activityWR.get();
-        if (MainSelector.isNeedNewMain())
+        if (AppImpl.getAppRroxy().isNeedNewMain() )
             return;
         Intent intent = new Intent(activity, NewPersonalSpaceActivity.class);
         Buddy buddy = datas.get(position);
@@ -255,7 +255,7 @@ public class ExperDoctorFragmentAdapter extends BaseAdapter implements AdapterVi
                 ConfirmTipsDialog dialog = new ConfirmTipsDialog(activity, "确认取消吗？", new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        LogUtil.addLog(context, "event-forum-cancel-concern");
+                        AppImpl.getAppRroxy().addLog(context, "event-forum-cancel-concern");
                         ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
                             @Override
                             public void processResult(int requestCode, int resultCode, NetWorkResult data) {
@@ -280,7 +280,7 @@ public class ExperDoctorFragmentAdapter extends BaseAdapter implements AdapterVi
                 dialog.show();
 
             } else {
-                LogUtil.addLog(context, "event-forum-concern");
+                AppImpl.getAppRroxy().addLog(context, "event-forum-concern");
                 ApiManager.followUser(new RequestManager.RequestListener<NetWorkResult>() {
                     @Override
                     public void processResult(int requestCode, int resultCode, NetWorkResult data) {

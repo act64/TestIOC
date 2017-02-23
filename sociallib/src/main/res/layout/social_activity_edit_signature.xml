@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_page"
+    android:orientation="vertical">
+
+    <com.jkys.common.widget.CustomToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_toolbar_height"
+        android:background="@color/social_primary"
+        app:contentInsetStart="0dp"
+        app:left_firstIcon="@drawable/common_navigation_btn_back_nor"
+        app:right_firstText="确认"
+        app:toolbar_title="修改签名" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:focusableInTouchMode="true"
+            android:gravity="start"
+            android:lines="3"
+            android:minHeight="40dp"
+            android:padding="10dp"
+            android:paddingLeft="5dp"
+            android:textColor="#333333"
+            android:textColorHint="#DDDDDD"
+            android:textSize="18sp">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/countHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/edittext"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:text="0/30"
+            android:textColor="#DDDDDD"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/edittext"
+            android:background="#CCCCCC" />
+    </RelativeLayout>
+</RelativeLayout>

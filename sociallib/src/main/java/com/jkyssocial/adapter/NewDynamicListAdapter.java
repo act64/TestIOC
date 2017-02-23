@@ -21,6 +21,9 @@ import android.widget.Toast;
 import com.jkys.jkysbase.TimeUtil;
 import com.jkys.jkyswidget.ConfirmTipsDialog;
 import com.jkys.jkyswidget.CustomDialog;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
+import com.jkys.sociallib.R2;
 import com.jkys.tools.DeviceUtil;
 import com.jkys.tools.ImageUtil;
 import com.jkys.tools.MainSelector;
@@ -37,23 +40,18 @@ import com.jkyssocial.listener.ListUIListener;
 import com.mintcode.base.BaseActivity;
 import com.mintcode.base.BaseTopActivity;
 import com.mintcode.util.ImageManager;
-import com.mintcode.util.LogUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import org.jsoup.helper.StringUtil;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.dreamplus.wentang.BuildConfig;
-import cn.dreamplus.wentang.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -132,7 +130,7 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
                 return;
             }
             if (activity instanceof NewPersonalSpaceActivity) return;
-            if (MainSelector.isNeedNewMain())
+            if (AppImpl.getAppRroxy().isNeedNewMain() )
                 return;
             Intent intent = new Intent(activity, NewPersonalSpaceActivity.class);
             intent.putExtra("otherBuddy", dynamic.getOwner());
@@ -202,7 +200,7 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
                 return;
             }
             if (!TextUtils.isEmpty(source))
-                LogUtil.addLog(context, "event-topic-detail-trump-" + source + dynamic.getDynamicId());
+                AppImpl.getAppRroxy().addLog(context, "event-topic-detail-trump-" + source + dynamic.getDynamicId());
             Intent intent = new Intent(activity, DynamicDetailActivity.class);
             intent.putExtra("dynamic", dynamic);
             activity.startActivity(intent);
@@ -231,7 +229,7 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
         Dynamic dynamic = getItem(position);
         if (dynamic.getOwner() != null) {
             if (!TextUtils.isEmpty(dynamic.getOwner().getImgUrl())) {
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH + dynamic.getOwner().getImgUrl(),
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH() + dynamic.getOwner().getImgUrl(),
                         null, holder.avatarIV, ImageManager.avatarOptions);
             }
 
@@ -316,7 +314,7 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
         if (dynamic.getStatusAndroid() == 0) {
             String url = dynamic.getImages().get(position);
             if (!TextUtils.isEmpty(url)) {
-                ImageManager.loadImage(BuildConfig.STATIC_PIC_PATH
+                ImageManager.loadImage( AppImpl.getAppRroxy().getSTATIC_PIC_PATH()
                                 + ImageUtil.getSmallImageUrl(url), null,
                         imageView, new Reloadlistener());
             }
@@ -444,70 +442,70 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
 
     public static class DynamicTextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @Bind(R.id.rootView)
+        @BindView(R2.id.rootView)
         public View rootView;
 
-        @Bind(R.id.headerLine)
+        @BindView(R2.id.headerLine)
         public View headerLine;
 
-        @Bind(R.id.headerPad)
+        @BindView(R2.id.headerPad)
         public View headerPad;
 
-        @Bind(R.id.dynamicHeader)
+        @BindView(R2.id.dynamicHeader)
         public View dynamicHeader;
 
-        @Bind(R.id.avatar)
+        @BindView(R2.id.avatar)
         public CircleImageView avatarIV;
 
-        @Bind(R.id.vFlag)
+        @BindView(R2.id.vFlag)
         public ImageView vFlag;
 
-        @Bind(R.id.userName)
+        @BindView(R2.id.userName)
         public TextView userNameTV;
 
-        @Bind(R.id.createdTime)
+        @BindView(R2.id.createdTime)
         public TextView createdTimeTV;
 
-        @Bind(R.id.title)
+        @BindView(R2.id.title)
         public TextView titleTV;
 
-        @Bind(R.id.content)
+        @BindView(R2.id.content)
         public TextView contentTV;
 
-        @Bind(R.id.come)
+        @BindView(R2.id.come)
         public ViewGroup comeVG;
 
-        @Bind(R.id.comeFrom)
+        @BindView(R2.id.comeFrom)
         public TextView comeFromTV;
 
-        @Bind(R.id.zan)
+        @BindView(R2.id.zan)
         public TextView zanTV;
 
-        @Bind(R.id.comment)
+        @BindView(R2.id.comment)
         public TextView commentTV;
 
-        @Bind(R.id.renqi)
+        @BindView(R2.id.renqi)
         public TextView renqiTV;
 
-        @Bind(R.id.sendingBar)
+        @BindView(R2.id.sendingBar)
         public ProgressBar sendingBar;
 
-        @Bind(R.id.sendError)
+        @BindView(R2.id.sendError)
         public ImageView sendError;
 
-        @Bind(R.id.sendStatus)
+        @BindView(R2.id.sendStatus)
         public TextView sendStatus;
 
-        @Bind(R.id.topic_tv)
+        @BindView(R2.id.topic_tv)
         public TextView topicTV;
 
-        @Bind(R.id.circleOwnerTag)
+        @BindView(R2.id.circleOwnerTag)
         public FancyButton circleOwnerTag;
 
-        @Bind(R.id.circleRecommendTag)
+        @BindView(R2.id.circleRecommendTag)
         public FancyButton circleRecommendTag;
 
-        @Bind(R.id.avatarArea)
+        @BindView(R2.id.avatarArea)
         public PercentRelativeLayout avatartArea;
 
         public DynamicTextViewHolderClicks mDynamicTextViewHolderClicks;
@@ -542,25 +540,25 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-//                case R.id.dynamicHeader:
+//                case R2.id.dynamicHeader:
 //                    mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
 //                    return;
-                case R.id.avatarArea:
+                case R2.id.avatarArea:
                     mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
                     return;
-                case R.id.userName:
+                case R2.id.userName:
                     mDynamicTextViewHolderClicks.onUserArea(v, getAdapterPosition());
                     return;
-                case R.id.rootView:
+                case R2.id.rootView:
                     mDynamicTextViewHolderClicks.onItemView(v, getAdapterPosition());
                     return;
-                case R.id.comeFrom:
+                case R2.id.comeFrom:
                     mDynamicTextViewHolderClicks.onComeFrom(v, getAdapterPosition());
                     return;
-                case R.id.sendError:
+                case R2.id.sendError:
                     mDynamicTextViewHolderClicks.onSend(v, this);
                     return;
-                case R.id.sendStatus:
+                case R2.id.sendStatus:
                     mDynamicTextViewHolderClicks.onSend(v, this);
                     return;
             }
@@ -570,7 +568,7 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
 
     public class DynamicOneImageViewHolder extends DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
         DynamicOneImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {
@@ -580,10 +578,10 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
 
     public class DynamicTwoImageViewHolder extends DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
-        @Bind(R.id.secondImage)
+        @BindView(R2.id.secondImage)
         ImageView secondImage;
 
         DynamicTwoImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {
@@ -593,16 +591,16 @@ public class NewDynamicListAdapter extends RecyclerView.Adapter<NewDynamicListAd
 
     public class DynamicThreeImageViewHolder extends DynamicTextViewHolder {
 
-        @Bind(R.id.firstImage)
+        @BindView(R2.id.firstImage)
         ImageView firstImage;
 
-        @Bind(R.id.secondImage)
+        @BindView(R2.id.secondImage)
         ImageView secondImage;
 
-        @Bind(R.id.thirdImage)
+        @BindView(R2.id.thirdImage)
         ImageView thirdImage;
 
-        @Bind(R.id.moreImageTag)
+        @BindView(R2.id.moreImageTag)
         TextView moreImageTag;
 
         DynamicThreeImageViewHolder(View view, DynamicTextViewHolderClicks dynamicTextViewHolderClicks) {

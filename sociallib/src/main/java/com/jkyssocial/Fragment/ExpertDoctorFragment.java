@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jkys.jkyswidget.MyListView;
+import com.jkys.proxy.AppImpl;
+import com.jkys.sociallib.R;
 import com.jkys.tools.DeviceUtil;
 import com.jkyssocial.adapter.ExperDoctorFragmentAdapter;
 import com.jkyssocial.event.FollowUserEvent;
-import com.mintcode.util.LogUtil;
 
-import cn.dreamplus.wentang.R;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -70,7 +70,7 @@ public class ExpertDoctorFragment extends AllCircleBaseFragment{
         listView.setOnLoadListener(adapter);
         listView.setOnItemClickListener(adapter);
         swipeRefreshLayout.setOnRefreshListener(adapter);
-        LogUtil.addLog(getContext(), "page-forum-doctor-list");
+        AppImpl.getAppRroxy().addLog(getContext(), "page-forum-doctor-list");
 //        getData(null);
         return view;
     }
